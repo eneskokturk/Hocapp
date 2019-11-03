@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "95520651357",
+    "firebase_url": "https://hocapp-b8750.firebaseio.com",
+    "project_id": "hocapp-b8750",
+    "storage_bucket": "hocapp-b8750.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:95520651357:android:4fbbef4d9df691f663b5b4",
+        "android_client_info": {
+          "package_name": "com.example.hocapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "95520651357-dr56a7akk22f90qbrgjjtrrcb6cbtdkc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdiWlqveXrZ5u-28oakqgExcnrMUxd0bo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "95520651357-dr56a7akk22f90qbrgjjtrrcb6cbtdkc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
