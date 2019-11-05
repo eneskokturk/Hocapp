@@ -2,12 +2,17 @@ package com.example.hocapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -18,73 +23,122 @@ public class SignUpActivity extends AppCompatActivity {
     EditText birthdayText;
     RadioGroup studentOrTeacher;
     RadioGroup maleOrFemale;
-    RadioButton radioButton1;
-    RadioButton radioButton2;
-    RadioButton radioButton3;
-    RadioButton radioButton4;
+    RadioButton radioStudent;
+    RadioButton radioTeacher;
+    RadioButton radioMale;
+    RadioButton radioFemale;
     Button signUpNextButton;
-    String stuorteach; // ogrenci ogretmen degiskeni
-
+    String gender;                              //Cinsiyet degiskeni
+    String userType;                            //Kullanici tipi degiskeni , ogretmen veya ogrenci
+    String userName;
+    String password;
+    String birthday;
+    String eMail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        studentOrTeacher =findViewById(R.id.studentOrTeacher);       // Ogrenci ve Ogretmen Radio Group
-        maleOrFemale = findViewById(R.id.maleOrFemale);              // Cinsiyet Radio Group
-        radioButton1= findViewById(R.id.radioButton);               //Ogrenci
-        radioButton2= findViewById(R.id.radioButton2);              //Ogretmen
-        radioButton3= findViewById(R.id.radioButton3);              //Kadın
-        radioButton4= findViewById(R.id.radioButton4);              //Erkek
+        studentOrTeacher = findViewById(R.id.studentOrTeacher);         // Ogrenci ve Ogretmen Radio Group
+        maleOrFemale = findViewById(R.id.maleOrFemale);                // Cinsiyet Radio Group
+        radioStudent = findViewById(R.id.radioStudent);                //Ogrenci
+        radioTeacher = findViewById(R.id.radioTeacher);                //Ogretmen
+        radioMale = findViewById(R.id.radioFemale);                    //Kadın
+        radioFemale = findViewById(R.id.radioMale);                    //Erkek
 
         nameText = findViewById(R.id.nameText);
         emailText = findViewById(R.id.emailText);
         passwordText = findViewById(R.id.passwordText);
         passwordAgainText = findViewById(R.id.passwordAgainText);
         birthdayText = findViewById(R.id.birthdayText);
-        signUpNextButton =findViewById(R.id.signUpNextButton);
+        signUpNextButton = findViewById(R.id.signUpNextButton);
+
+
 
         signUpNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(radioButton1.isChecked())
-                {
-                    stuorteach="Öğrenci";
-                    System.out.println(stuorteach);
-                }else if (radioButton2.isChecked())
-                {
-                    stuorteach="Öğretmen";
-                    System.out.println(stuorteach);
-                }
 
+                userName = nameText.getText().toString();
+                password = passwordText.getText().toString();
+                eMail = emailText.getText().toString();
+                birthday = birthdayText.getText().toString();
+
+                int genderId = maleOrFemale.getCheckedRadioButtonId();
+                switch (genderId)                                                   //Kullanicinin Cinsiyetini belirlemek icin kullanılan switch case yapisi
+                {
+                    case R.id.radioMale: {
+                        gender = "Erkek";
+                        break;
+                    }
+                    case R.id.radioFemale: {
+                        gender = "Kadın";
+                        break;
+                    }
+                }
+                int userTypeId = studentOrTeacher.getCheckedRadioButtonId();      //Kullanicinin ogretmen veya ogrenci oldugunu belirlemek icin kullanilan switch-case
+                switch (userTypeId) {
+                    case R.id.radioStudent: {
+                        userType = "Öğrenci";
+                        break;
+                    }
+                    case R.id.radioTeacher: {
+                        userType = "Öğretmen";
+                        break;
+                    }
+                }
+                if(isEmailValid(eMail)==true)                                   //E-mail kurallara uygun yazildiysa devam et yoksa toast message yayinla
+                {
+                    if(passwordText.getText().toString().equals(passwordAgainText.getText().toString()))   //Girilen Sifre ve Sifre tekrar alanlarını karşılaştır
+                    {
+                        Intent intent = new Intent(SignUpActivity.this, SignUpActivityNext.class);
+                        intent.putExtra("userNameInput",userName);                  //SignUpActivityNext e data yollama
+                        intent.putExtra("passwordInput",password);
+                        intent.putExtra("genderInput",gender);
+                        intent.putExtra("userTypeInput",userType);
+                        intent.putExtra("birthdayInput",birthday);
+                        intent.putExtra("emailInput",eMail);
+
+                        startActivity(intent);
+                    }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(),"Girdiğiniz Şifreler Eşleşmiyor.Lütfen Kontrol Edip Tekrar Deneyiniz...",Toast.LENGTH_LONG).show();
+                    }
+
+                }else
+                {
+                    Toast.makeText(getApplicationContext(),"Lüften Geçerli E-mail Adresi Giriniz...",Toast.LENGTH_LONG).show();
+                }
 
             }
         });
-
-
     }
 
 
+    public boolean isEmailValid(String eMail)                               //E-mail adresinin gecerli olup olmadigini regex kullanarak kontrol et
+    {                                                                        //Uygun sartlar olusturulursa true , degilse false dondur.
+        String regExpn =
+                "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
+                        +"((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                        +"[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
+                        +"([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                        +"[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
+                        +"([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$";
 
-    public void studentOrTeacherClick(View view)
-    {
+        CharSequence inputStr = eMail;
 
+        Pattern pattern = Pattern.compile(regExpn,Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(inputStr);
 
+        if(matcher.matches())
+            return true;
+        else
+            return false;
     }
 
-    public void maleOrFemaleClick (View view)
-    {
-
-
-    }
-
-
-
-
-    public void signUpNextClicked(View view)
-    {
-
-
-    }
 }
+
+
+

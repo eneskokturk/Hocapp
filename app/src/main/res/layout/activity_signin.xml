@@ -1,97 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context=".SignInActivity"
-android:background="#FDD78C">
-
-<LinearLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:background="#FDD78C"
+    android:clickable="true"
+    tools:context=".SignInActivity">
 
-    >
-
-
-    <ImageView
-        android:id="@+id/logo"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:paddingTop="40dp"
-        app:srcCompat="@drawable/hocapp_icon2"
-
-        />
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingTop="40dp"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp">
-
-        <EditText
-            android:id="@+id/emailText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:hint="E-mail adresinizi giriniz.."
-            android:inputType="textEmailAddress"
-            />
-
-        <EditText
-            android:id="@+id/passwordAgainText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:hint="Şifrenizi giriniz.."
-            android:inputType="textPassword"
-            />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="center"
         android:orientation="vertical"
 
         >
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="300dp"
-            android:layout_height="40dp"
-            android:layout_margin="30dp"
-            android:background="@drawable/button"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:onClick="signInClicked"
-            android:text="Giriş Yap"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:textSize="17sp" />
 
-        <TextView
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif"
-            android:text="Hesabın yok mu? Hemen üye ol!"
-            android:textAllCaps="false"
-            android:textColor="#D95100"
-            android:textSize="13dp"
-            android:textStyle="bold" />
+            android:layout_margin="10dp"
+            android:paddingTop="40dp"
+            app:srcCompat="@drawable/hocapp_icon2"
 
+            />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="24dp"
+            android:paddingTop="40dp"
+            android:paddingRight="24dp">
+
+            <EditText
+                android:id="@+id/emailText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:hint="E-mail adresinizi giriniz.."
+                android:inputType="textEmailAddress" />
+
+            <EditText
+                android:id="@+id/passwordAgainText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:hint="Şifrenizi giriniz.."
+                android:inputType="textPassword" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+
+            >
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:layout_margin="30dp"
+                android:background="@drawable/button"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:onClick="signInClicked"
+                android:text="Giriş Yap"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/signUp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:contextClickable="true"
+                android:fontFamily="sans-serif"
+                android:linksClickable="true"
+                android:onClick="signUpClicked"
+                android:text="Hesabın yok mu? Hemen üye ol!"
+                android:textAllCaps="false"
+                android:textColor="#D95100"
+                android:textSize="13dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
-
-
 
 
 </FrameLayout>

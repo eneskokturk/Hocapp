@@ -23,22 +23,19 @@
         android:orientation="horizontal"
         >
         <RadioButton
-            android:id="@+id/radioButton3"
+            android:id="@+id/radioFemale"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:onClick="maleOrFemaleClick"
             android:text="Kadın"
              />
 
         <RadioButton
-            android:id="@+id/radioButton4"
+            android:id="@+id/radioMale"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:onClick="maleOrFemaleClick"
-            android:text="Erkek"
-            />
+            android:text="Erkek" />
 
     </RadioGroup>
 
@@ -51,21 +48,19 @@
 
        >
     <RadioButton
-        android:id="@+id/radioButton"
+        android:id="@+id/radioStudent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:onClick="studentOrTeacherClick"
         android:text="Öğrenci"
         />
 
 
     <RadioButton
-        android:id="@+id/radioButton2"
+        android:id="@+id/radioTeacher"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:onClick="studentOrTeacherClick"
         android:text="Öğretmen"
          />
 
@@ -86,8 +81,18 @@
         android:hint="İsim Soyisim"
         android:inputType="textPersonName"
         />
+        <EditText
+            android:id="@+id/passwordText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="Şifre"
+            android:inputType="textPassword"
+            />
 
-    <EditText
+
+
+        <EditText
         android:id="@+id/passwordAgainText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -114,14 +119,6 @@
         android:inputType="textEmailAddress"
         />
 
-        <EditText
-            android:id="@+id/passwordText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:hint="Şifre"
-            android:inputType="textPassword"
-            />
 
     <Button
         android:id="@+id/signUpNextButton"
