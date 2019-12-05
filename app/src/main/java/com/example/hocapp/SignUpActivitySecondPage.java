@@ -25,6 +25,7 @@ import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -57,7 +58,7 @@ public class SignUpActivitySecondPage extends AppCompatActivity {
     String emailDatabase;
     String genderDatabase;
     String userTypeDatabase;
-
+    String passwordDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +81,7 @@ public class SignUpActivitySecondPage extends AppCompatActivity {
         userBiographyText = findViewById(R.id.userBiography);
 
 
+        firebaseAuth = FirebaseAuth.getInstance();
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -88,6 +90,7 @@ public class SignUpActivitySecondPage extends AppCompatActivity {
         emailDatabase=email;
         genderDatabase=gender;
         userTypeDatabase=userType;
+        passwordDatabase=password;
 
 
     }
@@ -124,6 +127,22 @@ public class SignUpActivitySecondPage extends AppCompatActivity {
                             userData.put("downloadurl",downloadUrl);
                             userData.put("biography",userBiography);
                             userData.put("date", FieldValue.serverTimestamp());
+
+                            firebaseAuth.createUserWithEmailAndPassword(emailDatabase,passwordDatabase).addOnSuccessListener(new OnSuccessListener<AuthResult>() //yeni üye olustur
+                            {
+                                @Override
+                                public void onSuccess(AuthResult authResult) {
+
+
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(SignUpActivitySecondPage.this,e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
+                                }
+                            });
+
+
 
                             firebaseFirestore.collection("Users").add(userData).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                 @Override

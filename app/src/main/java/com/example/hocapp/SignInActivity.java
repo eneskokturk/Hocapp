@@ -52,7 +52,6 @@ public class SignInActivity extends AppCompatActivity {
     {
 
 
-
         String email = emailText.getText().toString();
         String password = passwordText.getText().toString();
         if(emailText.getText().toString().trim().equals("")||passwordText.getText().toString().equals("")) //Eğer e-mail veya sifre kısımınlarından birtanesi bos ise
