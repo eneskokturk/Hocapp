@@ -92,8 +92,8 @@ public class SignUpActivity extends AppCompatActivity {
                 {
                     if(passwordText.getText().toString().equals(passwordAgainText.getText().toString()))   //Girilen Sifre ve Sifre tekrar alanlarını karşılaştır
                     {
-                        Intent intent = new Intent(SignUpActivity.this, SignUpActivityNext.class);
-                        intent.putExtra("userNameInput",userName);                  //SignUpActivityNext e data yollama
+                        Intent intent = new Intent(SignUpActivity.this, SignUpActivitySecondPage.class);
+                        intent.putExtra("userNameInput",userName);                  //SignUpActivitySecondPage e data yollama
                         intent.putExtra("passwordInput",password);
                         intent.putExtra("genderInput",gender);
                         intent.putExtra("userTypeInput",userType);
