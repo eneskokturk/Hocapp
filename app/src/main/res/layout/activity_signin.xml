@@ -82,7 +82,6 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
             android:layout_gravity="center"
             android:orientation="vertical">
 
@@ -109,24 +108,33 @@
 
         </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/signUp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:clickable="true"
+            android:contextClickable="true"
+            android:fontFamily="sans-serif"
+            android:gravity="bottom|center"
+            android:linksClickable="true"
+            android:onClick="signUpClicked"
+            android:text="Hesabın yok mu? Hemen üye ol!"
+            android:textAllCaps="false"
+            android:textColor="#D95100"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/signUp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:clickable="true"
-        android:contextClickable="true"
-        android:fontFamily="sans-serif"
-        android:gravity="bottom|center"
-        android:linksClickable="true"
-        android:onClick="signUpClicked"
-        android:text="Hesabın yok mu? Hemen üye ol!"
-        android:textAllCaps="false"
-        android:textColor="#D95100"
-        android:textSize="16dp"
-        android:textStyle="bold" />
+
+    </LinearLayout>
+
 
 
 </FrameLayout>

@@ -44,22 +44,24 @@
             android:id="@+id/maleOrFemale"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="center">
 
             <RadioButton
                 android:id="@+id/radioFemale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
                 android:text="Kadın"
-                android:buttonTint=""
+                android:layout_margin="10dp"
+                android:checked="true"
+                android:buttonTint="@color/darkOrange"
                  />
 
             <RadioButton
                 android:id="@+id/radioMale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:buttonTint="@color/darkOrange"
                 android:layout_margin="10dp"
                 android:text="Erkek" />
 
@@ -69,13 +71,15 @@
             android:id="@+id/studentOrTeacher"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="center">
 
         <RadioButton
             android:id="@+id/radioStudent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checked="true"
+            android:buttonTint="@color/darkOrange"
             android:layout_margin="10dp"
             android:text="Öğrenci"
             />
@@ -85,6 +89,7 @@
             android:id="@+id/radioTeacher"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:buttonTint="@color/darkOrange"
             android:layout_margin="10dp"
             android:text="Öğretmen"
              />
@@ -93,24 +98,28 @@
 
     </LinearLayout>
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_gravity="center">
 
-    <EditText
-        android:id="@+id/nameText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:hint="İsim Soyisim"
-        android:inputType="textPersonName"
-        />
+        <EditText
+            android:id="@+id/nameText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/shape_sign_up"
+            android:drawablePadding="10dp"
+            android:hint="İsim Soyisim"
+            android:inputType="textPersonName"
+            />
         <EditText
             android:id="@+id/passwordText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:background="@drawable/shape_sign_up"
+            android:drawablePadding="10dp"
             android:hint="Şifre"
             android:inputType="textPassword"
             />
@@ -118,43 +127,65 @@
 
 
         <EditText
-        android:id="@+id/passwordAgainText"
+            android:id="@+id/passwordAgainText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/shape_sign_up"
+            android:drawablePadding="10dp"
+            android:hint="Şifre Tekrar"
+            android:inputType="textPassword"/>
+
+        <EditText
+            android:id="@+id/birthdayText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/shape_sign_up"
+            android:drawablePadding="10dp"
+            android:hint="Doğum Tarihi"
+            android:inputType="date"
+             />
+
+        <EditText
+            android:id="@+id/emailText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/shape_sign_up"
+            android:drawablePadding="10dp"
+            android:hint="E-Mail"
+            android:inputType="textEmailAddress"
+            />
+
+
+
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:hint="Şifre Tekrar"
-        android:inputType="textPassword"
-       />
+        android:layout_height="match_parent"
+        android:gravity="center|bottom"
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/birthdayText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        <Button
 
-        android:hint="Doğum Tarihi"
-        android:inputType="date"
-         />
-
-    <EditText
-        android:id="@+id/emailText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:hint="E-Mail"
-        android:inputType="textEmailAddress"
-        />
-
-
-    <Button
-        android:id="@+id/signUpNextButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:onClick="signUpNextClicked"
-        android:text="------->"
-       />
-
+            android:id="@+id/signUpNextButton"
+            android:drawableRight="@drawable/ic_trending_flat_black_24dp"
+            android:paddingRight="130dp"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_margin="30dp"
+            android:background="@drawable/button"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:onClick="signUpNextClicked"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="17sp" />
 
     </LinearLayout>
 

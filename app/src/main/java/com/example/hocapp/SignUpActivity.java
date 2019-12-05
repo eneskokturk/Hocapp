@@ -11,6 +11,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -65,6 +67,8 @@ public class SignUpActivity extends AppCompatActivity {
                 eMail = emailText.getText().toString();
                 birthday = birthdayText.getText().toString();
 
+
+
                 int genderId = maleOrFemale.getCheckedRadioButtonId();
                 switch (genderId)                                                   //Kullanicinin Cinsiyetini belirlemek icin kullanılan switch case yapisi
                 {
@@ -88,7 +92,7 @@ public class SignUpActivity extends AppCompatActivity {
                         break;
                     }
                 }
-                if(isEmailValid(eMail)==true)                                   //E-mail kurallara uygun yazildiysa devam et yoksa toast message yayinla
+                if(isEmailValid(eMail)&& isValidDate(birthday)==true)                                   //E-mail kurallara uygun yazildiysa devam et yoksa toast message yayinla
                 {
                     if(passwordText.getText().toString().equals(passwordAgainText.getText().toString()))   //Girilen Sifre ve Sifre tekrar alanlarını karşılaştır
                     {
@@ -138,6 +142,17 @@ public class SignUpActivity extends AppCompatActivity {
             return false;
     }
 
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+    boolean isValidDate(String birthday) {
+        try {
+            format.parse(birthday);
+            return true;
+        }
+        catch(ParseException e){
+            return false;
+        }
+    }
 }
 
 

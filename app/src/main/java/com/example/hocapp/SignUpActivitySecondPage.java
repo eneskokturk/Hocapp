@@ -82,7 +82,7 @@ public class SignUpActivitySecondPage extends AppCompatActivity {
 
 
         firebaseAuth = FirebaseAuth.getInstance();
-        firebaseStorage = FirebaseStorage.getInstance();
+       firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
         firebaseFirestore = FirebaseFirestore.getInstance();
         userNameDatabase=userName;

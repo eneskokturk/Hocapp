@@ -24,8 +24,8 @@
                 android:layout_height="150dp"
                 android:clickable="false"
 
-                android:paddingTop="40dp"
-                app:srcCompat="@drawable/profile" />
+                android:paddingTop="20dp"
+                app:srcCompat="@drawable/ic_person_black_24dp" />
 
 
             <LinearLayout
@@ -35,24 +35,21 @@
                 android:gravity="right">
 
                 <TextView
+                    android:gravity="center"
                     android:id="@+id/profilePicture"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:onClick="selectImage"
-
+                    android:drawableRight="@drawable/ic_add_circle_black_24dp"
+                    android:drawablePadding="10dp"
                     android:text="Profil Fotoğrafı Ekleyin"
-                    android:textColor="#D95100" />
+                    android:textColor="#D95100"
+                    android:textStyle="bold"
+                    android:textSize="15dp"
+                    />
 
-                <ImageView
-                    android:id="@+id/profilePictureAdd"
-                    android:layout_width="26dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="right"
 
-                    android:clickable="true"
-                    android:onClick="selectImage"
-                    app:srcCompat="@drawable/add" />
 
             </LinearLayout>
 
