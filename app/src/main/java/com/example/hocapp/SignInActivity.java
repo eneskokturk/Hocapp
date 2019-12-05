@@ -32,9 +32,9 @@ public class SignInActivity extends AppCompatActivity {
         emailText = findViewById(R.id.emailText);
         passwordText = findViewById(R.id.passwordAgainText);
         signUp= findViewById(R.id.signUp);
-        loadingProgress = findViewById(R.id.loadingProgress);
+        //loadingProgress = findViewById(R.id.loadingProgress);
 
-        loadingProgress.setVisibility(View.INVISIBLE);
+       // loadingProgress.setVisibility(View.INVISIBLE);
 
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();    // kullanici giris yapmis ise deger döndürür ,kimse yok ise null dondurur
 
@@ -60,7 +60,7 @@ public class SignInActivity extends AppCompatActivity {
         }
         else
         {
-            loadingProgress.setVisibility(View.VISIBLE);
+           // loadingProgress.setVisibility(View.VISIBLE);
             firebaseAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                 @Override
                 public void onSuccess(AuthResult authResult) {          //giris basarili ise mainactivitye yönlen
