@@ -75,7 +75,7 @@ public class SignUpActivitySecondPage extends AppCompatActivity {
         String userType = intent.getStringExtra("userTypeInput");
 
         profilePictureText = findViewById(R.id.profilePicture);
-        profilePictureAdd = findViewById(R.id.profilePictureAdd);
+       // profilePictureAdd = findViewById(R.id.profilePictureAdd);
         profilePictureLogo = findViewById(R.id.profilePictureLogo);
         createUserButton = findViewById(R.id.createUserButton);
         userBiographyText = findViewById(R.id.userBiography);

@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">Hocapp</string>
+    <string-array name="dersler">
+        <item>Ders Seçiniz...</item>
+        <item>Matematik</item>
+        <item>Fizik</item>
+        <item>Edebiyat</item>
+        <item>İngilizce</item>
+        <item>Bilgisayar Ağları</item>
+
+    </string-array>
+
+    <string-array name="alanlar">
+        <item>Alan Seçiniz...</item>
+        <item>İlkokul</item>
+        <item>Lise</item>
+        <item>Üniversite</item>
+        <item>Diğer</item>
+
+    </string-array>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 </resources>
