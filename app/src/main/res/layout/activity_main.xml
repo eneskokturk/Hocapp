@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/frame_container"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,85 +13,85 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:orientation="vertical"
-        android:gravity="center">
-
-
-        <Spinner
-            android:id="@+id/derslerSpinner"
-            android:layout_width="350dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="30dp"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center"
-            android:background="@drawable/shape_spinner"
-            android:gravity="center"
-            android:spinnerMode="dropdown"
-
-            />
+            android:layout_marginTop="25dp"
+            android:orientation="vertical"
+            android:gravity="center">
 
 
-        <Spinner
-            android:id="@+id/alanSpinner"
-            android:layout_width="350dp"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center"
-            android:background="@drawable/shape_spinner"
-            android:gravity="center"
-            android:spinnerMode="dropdown"/>
+            <Spinner
+                android:id="@+id/derslerSpinner"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:background="@drawable/shape_spinner"
+                android:gravity="center"
+                android:spinnerMode="dropdown"
 
+                />
+
+
+            <Spinner
+                android:id="@+id/alanSpinner"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:background="@drawable/shape_spinner"
+                android:gravity="center"
+                android:spinnerMode="dropdown"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="right">
+
+
+            <Button
+
+                android:id="@+id/createUserButton"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_margin="30dp"
+                android:background="@drawable/button"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:text="İlanları Listele"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="17sp" />
+
+
+        </LinearLayout>
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="right">
-
-
-        <Button
-
-            android:id="@+id/createUserButton"
-            android:layout_width="150dp"
-            android:layout_height="40dp"
-            android:layout_margin="30dp"
-            android:background="@drawable/button"
-            android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:text="İlanları Listele"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:textSize="17sp" />
-
-
-    </LinearLayout>
-
-    </LinearLayout>
 
 
 
 
-
-    <android.support.design.widget.BottomNavigationView
+    <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="0dp"
+        android:layout_gravity="bottom"
         android:layout_marginStart="0dp"
-        android:background="?android:attr/windowBackground"
+        android:background="@color/orange"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:itemBackground="@color/colorPrimary"
-        app:itemTextColor="@color/orange"
+        app:itemBackground="@color/orange"
+        app:itemIconTint="@drawable/tab_color"
+        app:itemTextColor="@drawable/tab_color"
         app:menu="@menu/navigation" />
 
 </FrameLayout>
-
-
