@@ -108,33 +108,33 @@ public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-            Fragment fragment;
 
-            switch (menuItem.getItemId()) {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            Fragment fragment;
+            switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    toolbar.setTitle("AnaSayfa");
-                    fragment= new HomeFragment();
+                    toolbar.setTitle("Home");
+                    fragment = new HomeFragment();
                     loadFragment(fragment);
                     return true;
-
                 case R.id.navigation_video:
                     toolbar.setTitle("Canlı Yayın");
-                    fragment= new VideoFragment();
+                    fragment = new VideoFragment();
                     loadFragment(fragment);
-                    return  true;
+                    return true;
                 case R.id.navigation_forum:
-                    toolbar.setTitle("Canlı Yayın");
-                    fragment= new ForumFragment();
+                    toolbar.setTitle("Forum");
+                    fragment = new ForumFragment();
                     loadFragment(fragment);
-                    return  true;
+                    return true;
                 case R.id.navigation_profile:
-                    toolbar.setTitle("Canlı Yayın");
-                    fragment= new ProfileFragment();
+                    toolbar.setTitle("Profile");
+                    fragment = new ProfileFragment();
                     loadFragment(fragment);
-                    return  true;
+                    return true;
             }
+
             return false;
         }
     };
