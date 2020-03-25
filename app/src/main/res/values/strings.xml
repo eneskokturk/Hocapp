@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Hocapp</string>
+
+    <string name="tab_text_1">İlan Ekle</string>
+    <string name="tab_text_2">İlan Listele</string>
     <string-array name="dersler">
         <item>Ders Seçiniz...</item>
         <item>Matematik</item>
@@ -35,6 +38,7 @@
         <item>İlan Listele</item>
 
     </string-array>
+
 
 
     <!-- TODO: Remove or change this placeholder text -->
