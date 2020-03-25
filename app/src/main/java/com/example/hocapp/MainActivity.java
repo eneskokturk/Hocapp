@@ -12,14 +12,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ExpandableListView;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
+
 
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -27,11 +20,11 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
-    Spinner spin;
-    Spinner spinAlan;
+
 
     private FirebaseAuth firebaseAuth;
     private ActionBar toolbar;  //Navigation Bar
+
 
 
 
@@ -47,64 +40,12 @@ public class MainActivity extends AppCompatActivity {
         loadFragment(new HomeFragment());
 
 
-
-
-        spin= findViewById(R.id.derslerSpinner);  //Spinner Dersler
-        final String[] dersler= getResources().getStringArray(R.array.dersler);
-        ArrayAdapter<String> derslerAdapter = new ArrayAdapter<String >(this, R.layout.dersler_spinner_layout,R.id.textView,dersler);
-        spin.setAdapter(derslerAdapter);
-        spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String code= String.valueOf(spin.getSelectedItem());
-                if(position==0){
-                    spin.setSelection(0);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-
-
-
-        });
-
-
-
-        spinAlan=findViewById(R.id.alanSpinner);   //Spinner Alanlar
-        final String[] alanlar= getResources().getStringArray(R.array.alanlar);
-        ArrayAdapter<String> alanlarAdapter = new ArrayAdapter<String >(this, R.layout.alanlar_spinner_layout,R.id.textView,alanlar);
-        spinAlan.setAdapter(alanlarAdapter);
-        spinAlan.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String code= String.valueOf(spinAlan.getSelectedItem());
-                if(position==0){
-                    spinAlan.setSelection(0);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-
-
-
-        });
-
-
+        BottomNavigationView navigation = findViewById(R.id.navigation);                    //.xml dosyamızda tanımladığımız id'si navigasyon olan BottomNavigationView'in nesnesini oluşturduk.
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);  //listener ekledik.
 
         firebaseAuth = FirebaseAuth.getInstance();  // initializing
 
-
-
     }
-
-
-
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -155,4 +96,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intentToSignIn);
         finish();
     }
+
+
 }
