@@ -10,9 +10,9 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
 
     private static final int[] TAB_TITLES= new int[]{R.string.tab_text_1,R.string.tab_text_2};
 
-    private final Context mContext;
+    private final HomeFragment mContext;
 
-    public TabsPagerAdapter(Context context, FragmentManager fm){
+    public TabsPagerAdapter(HomeFragment context, FragmentManager fm){
 
         super(fm);
         mContext= context;
