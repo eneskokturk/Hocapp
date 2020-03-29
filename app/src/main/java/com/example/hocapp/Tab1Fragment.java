@@ -45,13 +45,13 @@ public class Tab1Fragment extends Fragment {
         // Inflate the layout for this fragment
         View root=inflater.inflate(R.layout.fragment_home,container,false);
 
-        final TextView textView = root.findViewById(R.id.section_label);
+       /*final TextView textView = root.findViewById(R.id.section_label);
         pageViewModel.getText().observe(this,new Observer<String>(){
 
             public void onChanged(String s){
                 textView.setText(s);
             }
-        });
+        }); */
         return root;
     }
 
