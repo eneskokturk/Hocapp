@@ -28,7 +28,7 @@ public class HomeFragment extends Fragment {
 
         View view=inflater.inflate(R.layout.fragment_home,container,false);
 
-        TabsPagerAdapter tabsPagerAdapter= new TabsPagerAdapter(getActivity().getSupportFragmentManager());
+        TabsPagerAdapter tabsPagerAdapter= new TabsPagerAdapter(this,getActivity().getSupportFragmentManager());
 
         final ViewPager viewPager=(ViewPager)view.findViewById(R.id.view_pager);
         viewPager.setAdapter(tabsPagerAdapter);
