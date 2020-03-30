@@ -1,6 +1,7 @@
 package com.example.hocapp;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -16,10 +17,19 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.Map;
 
 public class SignInActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
+    private FirebaseFirestore firebaseFirestore;
     EditText emailText, passwordText;            // Kullanici adi ve sifreyi tutan degiskenler tanimlandi.
     TextView signUp;
     ProgressBar loadingProgress;
@@ -28,13 +38,15 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
 
-        firebaseAuth = FirebaseAuth.getInstance();  // initializing
+
+        firebaseAuth = FirebaseAuth.getInstance();// initializing
+        firebaseFirestore = FirebaseFirestore.getInstance();  // initializing
         emailText = findViewById(R.id.emailText);
         passwordText = findViewById(R.id.passwordAgainText);
         signUp= findViewById(R.id.signUp);
-        //loadingProgress = findViewById(R.id.loadingProgress);
+        loadingProgress = findViewById(R.id.loadingProgress);
 
-       // loadingProgress.setVisibility(View.INVISIBLE);
+       loadingProgress.setVisibility(View.INVISIBLE);
 
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();    // kullanici giris yapmis ise deger döndürür ,kimse yok ise null dondurur
 
@@ -44,9 +56,40 @@ public class SignInActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
 
+
         }
 
     }
+
+    public void getDataUserTypeFromFirestore()              //Giris yapan kullanici tipini firestoredan ceker. Anasayfada ögrenci veya ögretmen oldugunu anlamamıza yarar.
+    {
+        CollectionReference collectionReference =firebaseFirestore.collection("Users");
+
+        collectionReference.whereEqualTo("email",emailText.getText().toString()).addSnapshotListener(new EventListener<QuerySnapshot>() {   //firebase den gelen datayi giris yaparken kullanilan e maile göre filtreliyoruz.
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+
+                if (e !=null){
+                    Toast.makeText(SignInActivity.this,e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();    //eger firebasefirestoredan data okunanamazsa exception e yi göster
+                }
+
+                if(queryDocumentSnapshots!=null)
+                {
+                    for (DocumentSnapshot snapshot : queryDocumentSnapshots.getDocuments())
+                    {
+                        Map<String,Object> data= snapshot.getData();   //map olarak datayi geri cekiyoruz
+
+                        String userType =(String) data.get("userType");  //gelecek verinin string oldugundan emin oldugumuz icin casting islemi yapabiliyoruz
+                        System.out.println(userType);
+                    }
+                }
+
+
+
+            }
+        });
+    }
+
 
     public void signInClicked(View view)      //Giris Yap
     {
@@ -60,7 +103,8 @@ public class SignInActivity extends AppCompatActivity {
         }
         else
         {
-           // loadingProgress.setVisibility(View.VISIBLE);
+           loadingProgress.setVisibility(View.VISIBLE);
+            getDataUserTypeFromFirestore();
             firebaseAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                 @Override
                 public void onSuccess(AuthResult authResult) {          //giris basarili ise mainactivitye yönlen
@@ -72,6 +116,7 @@ public class SignInActivity extends AppCompatActivity {
             }).addOnFailureListener(new OnFailureListener() {           //giris basarisiz ise hata mesaji göster
                 @Override
                 public void onFailure(@NonNull Exception e) {
+                    loadingProgress.setVisibility(View.INVISIBLE);
                     Toast.makeText(SignInActivity.this, e.getLocalizedMessage().toString(), Toast.LENGTH_LONG).show();
                 }
             });
@@ -82,6 +127,12 @@ public class SignInActivity extends AppCompatActivity {
     public void signUpClicked(View view) {     //Üye Ol
 
         Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
+        startActivity(intent);
+
+    }
+    public void ForgotPasswordClicked(View view) {     //Sifremi unuttum
+
+        Intent intent = new Intent(SignInActivity.this, UserForgotPassword.class);
         startActivity(intent);
 
     }

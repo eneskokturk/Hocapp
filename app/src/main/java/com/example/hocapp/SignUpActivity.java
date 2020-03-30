@@ -2,10 +2,13 @@ package com.example.hocapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -13,6 +16,7 @@ import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,6 +34,7 @@ public class SignUpActivity extends AppCompatActivity {
     RadioButton radioMale;
     RadioButton radioFemale;
     Button signUpNextButton;
+    Button DatePickerButton;                    //Tarih ayarlama butonu
     String gender;                              //Cinsiyet degiskeni
     String userType;                            //Kullanici tipi degiskeni , ogretmen veya ogrenci
     String userName;
@@ -48,13 +53,46 @@ public class SignUpActivity extends AppCompatActivity {
         radioTeacher = findViewById(R.id.radioTeacher);                //Ogretmen
         radioMale = findViewById(R.id.radioFemale);                    //Kadın
         radioFemale = findViewById(R.id.radioMale);                    //Erkek
-
+        final Context context = this;
         nameText = findViewById(R.id.nameText);
         emailText = findViewById(R.id.emailText);
         passwordText = findViewById(R.id.passwordText);
         passwordAgainText = findViewById(R.id.passwordAgainText);
         birthdayText = findViewById(R.id.birthdayText);
         signUpNextButton = findViewById(R.id.signUpNextButton);
+        DatePickerButton =findViewById(R.id.DatePickerButton);
+
+
+        DatePickerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    // Şimdiki zaman bilgilerini alıyoruz. güncel yıl, güncel ay, güncel gün.
+                final Calendar takvim = Calendar.getInstance();
+                int yil = takvim.get(Calendar.YEAR);
+                int ay = takvim.get(Calendar.MONTH);
+                int gun = takvim.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dpd = new DatePickerDialog(context,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                // ay değeri 0 dan başladığı için (Ocak=0, Şubat=1,..,Aralık=11)
+                                // değeri 1 artırarak gösteriyoruz.
+                                month += 1;
+                                // year, month ve dayOfMonth değerleri seçilen tarihin değerleridir.
+                                // Edittextte bu değerleri gösteriyoruz.
+                                birthdayText.setText(dayOfMonth + "/" + month + "/" + year);
+                            }
+                        }, yil, ay, gun);
+                // datepicker açıldığında set edilecek değerleri buraya yazıyoruz.
+                // şimdiki zamanı göstermesi için yukarda tanmladığımz değşkenleri kullanyoruz.
+
+                // dialog penceresinin button bilgilerini ayarlıyoruz ve ekranda gösteriyoruz.
+                dpd.setButton(DatePickerDialog.BUTTON_POSITIVE, "Seç", dpd);
+                dpd.setButton(DatePickerDialog.BUTTON_NEGATIVE, "İptal", dpd);
+                dpd.show();
+            }
+        });
 
 
 
@@ -92,19 +130,27 @@ public class SignUpActivity extends AppCompatActivity {
                         break;
                     }
                 }
-                if(isEmailValid(eMail)&& isValidDate(birthday)==true)                                   //E-mail kurallara uygun yazildiysa devam et yoksa toast message yayinla
+                if(isEmailValid(eMail)==true)                                   //E-mail kurallara uygun yazildiysa devam et yoksa toast message yayinla
                 {
                     if(passwordText.getText().toString().equals(passwordAgainText.getText().toString()))   //Girilen Sifre ve Sifre tekrar alanlarını karşılaştır
                     {
-                        Intent intent = new Intent(SignUpActivity.this, SignUpActivitySecondPage.class);
-                        intent.putExtra("userNameInput",userName);                  //SignUpActivitySecondPage e data yollama
-                        intent.putExtra("passwordInput",password);
-                        intent.putExtra("genderInput",gender);
-                        intent.putExtra("userTypeInput",userType);
-                        intent.putExtra("birthdayInput",birthday);
-                        intent.putExtra("emailInput",eMail);
 
-                        startActivity(intent);
+                        if(gender ==null &&userType==null)
+                        {
+                            Toast.makeText(getApplicationContext(),"Lütfen Cinsiyet ve Eğitmen Bilgi Seçimini Boş Bırakmayınız..",Toast.LENGTH_LONG).show();
+
+                        }else
+                        {
+                            Intent intent = new Intent(SignUpActivity.this, SignUpActivitySecondPage.class);
+                            intent.putExtra("userNameInput",userName);                  //SignUpActivitySecondPage e data yollama
+                            intent.putExtra("passwordInput",password);
+                            intent.putExtra("genderInput",gender);
+                            intent.putExtra("userTypeInput",userType);
+                            intent.putExtra("birthdayInput",birthday);
+                            intent.putExtra("emailInput",eMail);
+
+                            startActivity(intent);
+                        }
                     }
                     else
                     {

@@ -23,7 +23,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="ViewPager Example"
-        android:text="İlanları Listele"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

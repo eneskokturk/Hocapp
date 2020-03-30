@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,6 +60,7 @@ public class SignUpActivitySecondPage extends AppCompatActivity {
     String genderDatabase;
     String userTypeDatabase;
     String passwordDatabase;
+    ProgressBar progressBarSignUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,14 +77,14 @@ public class SignUpActivitySecondPage extends AppCompatActivity {
         String userType = intent.getStringExtra("userTypeInput");
 
         profilePictureText = findViewById(R.id.profilePicture);
-       // profilePictureAdd = findViewById(R.id.profilePictureAdd);
+        //profilePictureAdd = findViewById(R.id.profilePictureAdd);
         profilePictureLogo = findViewById(R.id.profilePictureLogo);
         createUserButton = findViewById(R.id.createUserButton);
         userBiographyText = findViewById(R.id.userBiography);
-
+        progressBarSignUp =findViewById(R.id.progressBarSignUp);
 
         firebaseAuth = FirebaseAuth.getInstance();
-       firebaseStorage = FirebaseStorage.getInstance();
+        firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
         firebaseFirestore = FirebaseFirestore.getInstance();
         userNameDatabase=userName;
@@ -92,13 +94,15 @@ public class SignUpActivitySecondPage extends AppCompatActivity {
         userTypeDatabase=userType;
         passwordDatabase=password;
 
-
+        progressBarSignUp.setVisibility(View.INVISIBLE);
     }
 
     public void createUserButtonClicked(View view)
     {
 
+
         if (userImageData != null) {
+            progressBarSignUp.setVisibility(View.VISIBLE);
 
             UUID uuid = UUID.randomUUID();                      //universal unique id kullanici profil fotograflari icin id olusturma
             final String imageName = "images/" + uuid + ".jpg";
@@ -171,6 +175,13 @@ public class SignUpActivitySecondPage extends AppCompatActivity {
                 }
             });
         }
+
+        else{
+
+            Toast.makeText(getApplicationContext(),"Lütfen Profil Fotoğrafı Seçiniz.",Toast.LENGTH_LONG).show();
+
+        }
+
     }
     public void selectImage(View view) {                                                        //kullanicidan galeriye erisim izni
 
