@@ -1,4 +1,6 @@
+
 package com.example.hocapp;
+
 
 
 import android.os.Bundle;
@@ -29,48 +31,27 @@ import com.google.android.gms.maps.model.MarkerOptions;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Tab1Fragment extends Fragment {
 
-
-    private static final String TAG="İlanEkle";
 
 
 public class Tab1Fragment extends Fragment {
 
     private MapView mMapView;
     private GoogleMap googleMap;
-    Spinner spin;
-    Spinner spinAlan;
-    Spinner spinFiyat;
+   // Spinner spin;
+   // Spinner spinAlan;
+   // Spinner spinFiyat;
     public Tab1Fragment() {
         // Required empty public constructor
-
-    private PageViewModel pageViewModel;
-
-   public Tab1Fragment(){
-
-   }
-
-    public static Tab1Fragment newInstance(){
-       return new Tab1Fragment();
-    }
-
-    public void onCreate(Bundle savedInstanceState){
-       super.onCreate(savedInstanceState);
-
-       pageViewModel= ViewModelProviders.of(this).get(PageViewModel.class);
-       pageViewModel.setIndex(TAG);
-
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        mMapView= (MapView)view.findViewById(R.id.mapView);
+       /* mMapView= (MapView)view.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
         mMapView.onResume();
         try {
@@ -85,14 +66,14 @@ public class Tab1Fragment extends Fragment {
                 googleMap.setMyLocationEnabled(true);
                 //To add marker
                 LatLng sydney = new LatLng(-34, 151);
-                googleMap.addMarker(new MarkerOptions().position(sydney).title("Title").snippet("Marker Description"));
+               // googleMap.addMarker(new MarkerOptions().position(sydney).title("Title").snippet("Marker Description"));
                 // For zooming functionality
                 CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();
                 googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
             }
         });
 
-
+*/
 
         final Spinner spin = (Spinner) view.findViewById(R.id.derslerSpinner);  //Spinner Dersler
         String[] dersler = getResources().getStringArray(R.array.dersler);
@@ -137,7 +118,7 @@ public class Tab1Fragment extends Fragment {
 
         });
 
-        /*
+
         final Spinner spinFiyat= (Spinner)view.findViewById(R.id.fiyatSpinner);
         final String[] fiyatlar = getResources().getStringArray(R.array.fiyatlar);
         ArrayAdapter<String> fiyatlarAdapter = new ArrayAdapter<String>(this.getActivity(),R.layout.fiyatlar_spinner_layout,R.id.textView,fiyatlar);
@@ -158,10 +139,11 @@ public class Tab1Fragment extends Fragment {
             }
         });
 
-         */
+
         return view;
     }
 
+    /*
     @Override
     public void onResume() {
         super.onResume();
@@ -181,19 +163,6 @@ public class Tab1Fragment extends Fragment {
     public void onLowMemory() {
         super.onLowMemory();
         mMapView.onLowMemory();
-
-        // Inflate the layout for this fragment
-        View root=inflater.inflate(R.layout.fragment_home,container,false);
-
-       /*final TextView textView = root.findViewById(R.id.section_label);
-        pageViewModel.getText().observe(this,new Observer<String>(){
-
-            public void onChanged(String s){
-                textView.setText(s);
-            }
-        }); */
-        return root;
-
     }
-
+*/
 }
