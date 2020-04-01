@@ -112,6 +112,7 @@
             android:drawablePadding="10dp"
             android:hint="İsim Soyisim"
             android:inputType="textPersonName"
+
             />
         <EditText
             android:id="@+id/passwordText"
@@ -123,8 +124,6 @@
             android:hint="Şifre"
             android:inputType="textPassword"
             />
-
-
 
         <EditText
             android:id="@+id/passwordAgainText"
@@ -138,14 +137,22 @@
 
         <EditText
             android:id="@+id/birthdayText"
-            android:layout_width="match_parent"
+            android:layout_width="162dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:background="@drawable/shape_sign_up"
             android:drawablePadding="10dp"
             android:hint="Doğum Tarihi"
             android:inputType="date"
-             />
+
+
+            />
+
+        <Button
+            android:id="@+id/DatePickerButton"
+            android:layout_width="161dp"
+            android:layout_height="wrap_content"
+            android:text="Tarih Seç" />
 
         <EditText
             android:id="@+id/emailText"
@@ -157,10 +164,6 @@
             android:hint="E-Mail"
             android:inputType="textEmailAddress"
             />
-
-
-
-
 
 
     </LinearLayout>

@@ -16,10 +16,26 @@ import android.widget.TextView;
 /**
  * A simple {@link Fragment} subclass.
  */
-
 public class Tab2Fragment extends Fragment {
-    public Tab2Fragment() {
-        // Required empty public constructor
+
+
+    private static final String TAG="İlanListele";
+
+    private PageViewModel pageViewModel;
+
+    public Tab2Fragment(){
+
+    }
+
+    public static Tab1Fragment newInstance(){
+        return new Tab1Fragment();
+    }
+
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+
+        pageViewModel= ViewModelProviders.of(this).get(PageViewModel.class);
+        pageViewModel.setIndex(TAG);
     }
 
 
@@ -27,7 +43,16 @@ public class Tab2Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tab2, container, false);
+        View root=inflater.inflate(R.layout.fragment_home,container,false);
+
+        final TextView textView = root.findViewById(R.id.section_label);
+        pageViewModel.getText().observe(this,new Observer<String>(){
+
+            public void onChanged(String s){
+                textView.setText(s);
+            }
+        });
+        return root;
     }
 
 }

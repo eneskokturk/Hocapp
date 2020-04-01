@@ -68,7 +68,7 @@
                 android:fontFamily="sans-serif"
                 android:gravity="bottom|right"
                 android:linksClickable="true"
-                android:onClick="signUpClicked"
+                android:onClick="ForgotPasswordClicked"
                 android:text="Şifreni mi unuttun?"
                 android:textAllCaps="false"
                 android:textColor="#D95100"
