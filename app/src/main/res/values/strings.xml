@@ -21,6 +21,15 @@
         <item>Diğer</item>
 
     </string-array>
+    <string-array name="fiyatlar">
+        <item>Fiyat Aralığı Seçiniz...</item>
+        <item>50-80 TL</item>
+        <item>80-100 TL</item>
+        <item>100-150 TL</item>
+
+    </string-array>
+
+
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
