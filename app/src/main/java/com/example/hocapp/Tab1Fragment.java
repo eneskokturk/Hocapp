@@ -13,14 +13,43 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
+<<<<<<< Updated upstream
+=======
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+
+
+>>>>>>> Stashed changes
 /**
  * A simple {@link Fragment} subclass.
  */
 public class Tab1Fragment extends Fragment {
 
+<<<<<<< Updated upstream
+=======
+
+    Spinner derslerSpinner;
+    Spinner alanSpinner;
+    TextView textViewDers;
+
+    public Tab1Fragment() {
+        // Required empty public constructor
+    }
+>>>>>>> Stashed changes
 
     private static final String TAG="İlanEkle";
 
+<<<<<<< Updated upstream
     private PageViewModel pageViewModel;
 
    public Tab1Fragment(){
@@ -30,6 +59,49 @@ public class Tab1Fragment extends Fragment {
     public static Tab1Fragment newInstance(){
        return new Tab1Fragment();
     }
+=======
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_tab1, container, false);
+
+        final Spinner derslerSpinner = (Spinner) view.findViewById(R.id.derslerSpinner);        //assing variable
+        final TextView textViewDers = view.findViewById(R.id.textViewDers);
+        final Spinner alanSpinner = (Spinner) view.findViewById(R.id.alanSpinner);
+
+        ArrayList<String> derslerList= new ArrayList<>();
+
+        derslerList.add("ders sec");
+        derslerList.add("mat");
+        derslerList.add("fen");
+        derslerList.add("kimya");
+        derslerList.add("geo");
+        derslerList.add("mat");
+        derslerList.add("fen");
+        derslerList.add("kimya");
+        derslerList.add("geo");
+
+        derslerSpinner.setAdapter(new ArrayAdapter<>(this.getActivity(),android.R.layout.simple_spinner_dropdown_item,derslerList));
+
+        derslerSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position==0){
+                    textViewDers.setText("");
+                }
+                else{
+                    String selectedDers= parent.getItemAtPosition(position).toString();
+                    textViewDers.setText(selectedDers);
+
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+>>>>>>> Stashed changes
 
     public void onCreate(Bundle savedInstanceState){
        super.onCreate(savedInstanceState);
@@ -39,6 +111,7 @@ public class Tab1Fragment extends Fragment {
     }
 
 
+<<<<<<< Updated upstream
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -53,6 +126,12 @@ public class Tab1Fragment extends Fragment {
             }
         }); */
         return root;
+=======
+
+
+
+        return view;
+>>>>>>> Stashed changes
     }
 
 }

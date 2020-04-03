@@ -10,6 +10,7 @@
         android:id="@+id/section_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+<<<<<<< Updated upstream
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginLeft="16dp"
@@ -26,3 +27,84 @@
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+=======
+        android:orientation="vertical"
+        android:gravity="center">
+
+
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:orientation="vertical"
+            android:gravity="center">
+
+
+            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                android:id="@+id/derslerSpinner"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:background="@drawable/shape_spinner"
+                android:gravity="center"
+                android:spinnerMode="dropdown" />
+
+
+            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                android:id="@+id/alanSpinner"
+                android:layout_width="350dp"
+                android:layout_marginBottom="30dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:background="@drawable/shape_spinner"
+                android:gravity="center"
+                android:spinnerMode="dropdown"/>
+
+            <EditText
+                android:id="@+id/Fiyatİlan"
+                android:layout_width="350dp"
+                android:layout_height="35dp"
+                android:hint="Fiyat Bilgisi Giriniz"
+                android:inputType="text" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="right">
+
+
+            <Button
+
+                android:id="@+id/createUserButton"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_margin="30dp"
+                android:layout_gravity="center"
+                android:background="@drawable/button"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:text="İlan Yayınla"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/textViewDers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+</FrameLayout>
+>>>>>>> Stashed changes
