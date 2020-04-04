@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -27,6 +28,8 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,11 +39,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class Tab1Fragment extends Fragment {
 
-    private MapView mMapView;
-    private GoogleMap googleMap;
-   // Spinner spin;
-   // Spinner spinAlan;
-   // Spinner spinFiyat;
+    Spinner lessonSpinner;          //Dersler Spinner
+    Spinner lessonFieldSpinner;     //Ders alanları Spinner
+    EditText lessonPrice;           //Ders Ücreti
+
     public Tab1Fragment() {
         // Required empty public constructor
     }
@@ -49,42 +51,39 @@ public class Tab1Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_tab1, container, false);
 
-       /* mMapView= (MapView)view.findViewById(R.id.mapView);
-        mMapView.onCreate(savedInstanceState);
-        mMapView.onResume();
-        try {
-            MapsInitializer.initialize(getActivity().getApplicationContext());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        mMapView.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap mMap) {
-                googleMap = mMap;
-                googleMap.setMyLocationEnabled(true);
-                //To add marker
-                LatLng sydney = new LatLng(-34, 151);
-               // googleMap.addMarker(new MarkerOptions().position(sydney).title("Title").snippet("Marker Description"));
-                // For zooming functionality
-                CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();
-                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-            }
-        });
+        Spinner lessonSpinner = view.findViewById(R.id.lessonSpinner);
+        Spinner lessonFieldSpinner = view.findViewById(R.id.lessonFieldSpinner);
+        EditText lessonPrice=view.findViewById(R.id.lessonPrice);
 
-*/
+        ArrayList<String> lessonList = new ArrayList<>();           //Dersler Listesi
 
-        final Spinner spin = (Spinner) view.findViewById(R.id.derslerSpinner);  //Spinner Dersler
-        String[] dersler = getResources().getStringArray(R.array.dersler);
-        ArrayAdapter<String> derslerAdapter = new ArrayAdapter<String>(this.getActivity(), R.layout.dersler_spinner_layout, R.id.textView, dersler);
-        spin.setAdapter(derslerAdapter);
-        spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        lessonList.add("Ders Seçiniz..");
+        lessonList.add("Matematik");
+        lessonList.add("Fizik");
+        lessonList.add("Kimya");
+        lessonList.add("Geometri");
+        lessonList.add("Biyoloji");
+        lessonList.add("Türkçe");
+        lessonList.add("Edebiyat");
+        lessonList.add("İngilizce");
+        lessonList.add("Dil ve Anlatım");
+        lessonList.add("Masa Tenisi");
+        lessonList.add("Basketbol");
+
+        lessonSpinner.setAdapter(new ArrayAdapter<>(this.getActivity(),android.R.layout.simple_spinner_dropdown_item,lessonList));
+
+        lessonSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String code = String.valueOf(spin.getSelectedItem());
-                if (position == 0) {
-                    spin.setSelection(0);
+                if(position==0)
+                {
+                    System.out.println("gg");           //Spinner 0 konumunda seçim yapılmadı
+                }
+                else
+                {
+                    System.out.println("aa");           //Spinner 0 konumunda değil. Seçim yapıldı.
                 }
             }
 
@@ -92,45 +91,32 @@ public class Tab1Fragment extends Fragment {
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-
-
         });
 
+        ArrayList<String> lessonFieldList = new ArrayList<>();              //Ders Alanları
 
-        final Spinner spinAlan = (Spinner) view.findViewById(R.id.alanSpinner);   //Spinner Alanlar
-        final String[] alanlar = getResources().getStringArray(R.array.alanlar);
-        ArrayAdapter<String> alanlarAdapter = new ArrayAdapter<String>(this.getActivity(), R.layout.alanlar_spinner_layout, R.id.textView, alanlar);
-        spinAlan.setAdapter(alanlarAdapter);
-        spinAlan.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        lessonFieldList.add("Alan Seçiniz...");
+        lessonFieldList.add("İlkokul");
+        lessonFieldList.add("Ortaokul");
+        lessonFieldList.add("Lise");
+        lessonFieldList.add("Üniversite");
+        lessonFieldList.add("YKS");
+
+        lessonFieldSpinner.setAdapter(new ArrayAdapter<>(this.getActivity(),android.R.layout.simple_spinner_dropdown_item,lessonFieldList));
+
+        lessonFieldSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String code = String.valueOf(spinAlan.getSelectedItem());
-                if (position == 0) {
-                    spinAlan.setSelection(0);
+
+                if(position==0)
+                {
+                    System.out.println("gg");           //Spinner 0 konumunda seçim yapılmadı
                 }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-
-
-        });
-
-
-        final Spinner spinFiyat= (Spinner)view.findViewById(R.id.fiyatSpinner);
-        final String[] fiyatlar = getResources().getStringArray(R.array.fiyatlar);
-        ArrayAdapter<String> fiyatlarAdapter = new ArrayAdapter<String>(this.getActivity(),R.layout.fiyatlar_spinner_layout,R.id.textView,fiyatlar);
-        spinFiyat.setAdapter(fiyatlarAdapter);
-        spinFiyat.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String code = String.valueOf(spinFiyat.getSelectedItem());
-                if(position==0){
-                    spinFiyat.setSelection(0)
-                    ;
+                else
+                {
+                    System.out.println("aa");           //Spinner 0 konumunda değil. Seçim yapıldı.
                 }
+
             }
 
             @Override
@@ -143,26 +129,4 @@ public class Tab1Fragment extends Fragment {
         return view;
     }
 
-    /*
-    @Override
-    public void onResume() {
-        super.onResume();
-        mMapView.onResume();
-    }
-    @Override
-    public void onPause() {
-        super.onPause();
-        mMapView.onPause();
-    }
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mMapView.onDestroy();
-    }
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        mMapView.onLowMemory();
-    }
-*/
 }

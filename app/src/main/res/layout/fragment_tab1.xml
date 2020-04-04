@@ -13,15 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center">
-
-        <com.google.android.gms.maps.MapView
-            android:id="@+id/mapView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-
-    </LinearLayout>
+        android:gravity="center"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -31,20 +23,20 @@
             android:gravity="center">
 
 
-            <Spinner
-                android:id="@+id/derslerSpinner"
+            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                android:id="@+id/lessonSpinner"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="30dp"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
+                android:layout_margin="30dp"
                 android:background="@drawable/shape_spinner"
                 android:gravity="center"
                 android:spinnerMode="dropdown" />
 
 
-            <Spinner
-                android:id="@+id/alanSpinner"
+            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                android:id="@+id/lessonFieldSpinner"
                 android:layout_width="350dp"
                 android:layout_marginBottom="30dp"
                 android:layout_height="wrap_content"
@@ -54,17 +46,16 @@
                 android:gravity="center"
                 android:spinnerMode="dropdown"/>
 
-            <Spinner
-                android:id="@+id/fiyatSpinner"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center"
-                android:background="@drawable/shape_spinner"
-                android:gravity="center"
-                android:spinnerMode="dropdown"/>
 
         </LinearLayout>
+
+        <EditText
+            android:id="@+id/lessonPrice"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:inputType="number" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -75,7 +66,7 @@
 
             <Button
 
-                android:id="@+id/createUserButton"
+                android:id="@+id/createLessonButton"
                 android:layout_width="150dp"
                 android:layout_height="40dp"
                 android:layout_margin="30dp"
