@@ -15,12 +15,15 @@
         android:color="@color/darkOrange">
     </stroke>
 
+
+
     <padding
-        android:top="10dp"
-        android:right="30dp"
+
         android:left="10dp"
-        android:bottom="10dp">
+        android:right="30dp"
+        >
     </padding>
+
 
 </shape>
 

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".HomeFragment">
 
     <LinearLayout
@@ -29,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
-                android:layout_margin="30dp"
+                android:layout_margin="20dp"
                 android:background="@drawable/shape_spinner"
                 android:gravity="center"
                 android:spinnerMode="dropdown" />
@@ -50,12 +51,16 @@
         </LinearLayout>
 
         <EditText
+            android:background="@drawable/shape_edittext"
             android:id="@+id/lessonPrice"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:ems="10"
-            android:inputType="number" />
+            android:inputType="number"
+            android:hint="Lütfen Fiyat Giriniz."
+            android:textColorHint="@color/orange"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
