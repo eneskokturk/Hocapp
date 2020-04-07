@@ -36,8 +36,8 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar= getSupportActionBar();
 
-        toolbar.setTitle("Home");
-        loadFragment(new HomeFragment());
+        toolbar.setTitle("Search");
+        loadFragment(new SearchFragment());
 
 
         BottomNavigationView navigation = findViewById(R.id.navigation);                    //.xml dosyamızda tanımladığımız id'si navigasyon olan BottomNavigationView'in nesnesini oluşturduk.
@@ -54,6 +54,11 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             Fragment fragment;
             switch (item.getItemId()) {
+                case R.id.navigation_search:
+                    toolbar.setTitle("Search");
+                    fragment = new SearchFragment();
+                    loadFragment(fragment);
+                    return true;
                 case R.id.navigation_home:
                     toolbar.setTitle("Home");
                     fragment = new HomeFragment();
