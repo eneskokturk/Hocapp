@@ -10,6 +10,61 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="right">
+
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/mapViewLayout"
+                android:layout_width="match_parent"
+                android:layout_height="130dp" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/lineer"
+
+                >
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:shadowColor="@color/darkOrange"
+                    android:id="@+id/mapsText" />
+
+                <Button
+                    android:background="@drawable/button"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:text="Konuma Git"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/mapsButton"
+                    />
+            </LinearLayout>
+            <!--
+                       <ZoomControls
+                           android:id="@+id/zoom"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_alignParentEnd="true"
+                           android:layout_alignParentBottom="true"></ZoomControls>
+
+
+                       <Button
+                           android:text="Konumumu Bul"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:id="@+id/mapsFindMyLocationButton"
+                           />
+
+                       !-->
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,6 +83,7 @@
                 android:id="@+id/lessonSpinner"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
+                app:hintText="Lütfen Ders Seçiniz..."
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
                 android:layout_margin="20dp"
@@ -39,8 +95,9 @@
             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                 android:id="@+id/lessonFieldSpinner"
                 android:layout_width="350dp"
-                android:layout_marginBottom="30dp"
+                android:layout_marginBottom="20dp"
                 android:layout_height="wrap_content"
+                app:hintText="Lütfen Alan Seçiniz..."
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
                 android:background="@drawable/shape_spinner"
@@ -48,23 +105,24 @@
                 android:spinnerMode="dropdown"/>
 
 
+            <EditText
+                android:background="@drawable/shape_edittext"
+                android:id="@+id/lessonPrice"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:inputType="number"
+                android:hint="Lütfen Fiyat Giriniz."
+                android:textColorHint="@color/orange"
+                />
+
         </LinearLayout>
 
-        <EditText
-            android:background="@drawable/shape_edittext"
-            android:id="@+id/lessonPrice"
-            android:layout_width="350dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:ems="10"
-            android:inputType="number"
-            android:hint="Lütfen Fiyat Giriniz."
-            android:textColorHint="@color/orange"
-            />
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="right">
 
@@ -83,50 +141,9 @@
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
                 android:textSize="17sp" />
-
-            <com.google.android.gms.maps.MapView
-                android:id="@+id/mapViewLayout"
-                android:layout_width="match_parent"
-                android:layout_height="130dp" />
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/lineer"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true">
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:id="@+id/mapsText" />
-
-                <Button
-                    android:text="Git"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/mapsButton"
-                    />
-            </LinearLayout>
-
-            <ZoomControls
-                android:id="@+id/zoom"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"></ZoomControls>
-
-            <Button
-                android:text="Konumumu Bul"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/mapsFindMyLocationButton"
-                />
-
-
         </LinearLayout>
+
+
 
     </LinearLayout>
 </FrameLayout>
