@@ -103,7 +103,7 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
         EditText lessonPrice=view.findViewById(R.id.lessonPrice);
         Button createLessonButton = view.findViewById(R.id.createLessonButton);
         Button mapsButton =view.findViewById(R.id.mapsButton);
-        Button mapsFindMyLocationButton =view.findViewById(R.id.mapsFindMyLocationButton);          //konumumu bul
+//        Button mapsFindMyLocationButton =view.findViewById(R.id.mapsFindMyLocationButton);          //konumumu bul
         mapsText=view.findViewById(R.id.mapsText);
         geocoder = new Geocoder(getContext(), Locale.getDefault());
         firebaseFirestore = FirebaseFirestore.getInstance();                         // initializing
@@ -148,6 +148,8 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
 
         });
 
+
+        /*
         ZoomControls zoom=(ZoomControls)view.findViewById(R.id.zoom);  //Zoom out, Zoom in kontrol
         zoom.setOnZoomOutClickListener(new View.OnClickListener() {         //Zoom out tıklandı
             @Override
@@ -161,7 +163,7 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
                 mMap.animateCamera(CameraUpdateFactory.zoomIn());
             }
         });
-
+*/
         getDataFirebaseLesson();                                                              //firebaseden ders adlarını alan fonksiyon cagirildi.
         lessonSpinner.setAdapter(new ArrayAdapter<>(this.getActivity(),android.R.layout.simple_spinner_dropdown_item,lessonList));  //Dersler Spinner
 
