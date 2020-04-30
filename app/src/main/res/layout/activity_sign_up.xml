@@ -135,6 +135,12 @@
             android:hint="Şifre Tekrar"
             android:inputType="textPassword"/>
 
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+
         <EditText
             android:id="@+id/birthdayText"
             android:layout_width="162dp"
@@ -149,10 +155,18 @@
             />
 
         <Button
+            android:layout_marginTop="6dp"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="17sp"
+            android:background="@drawable/button"
             android:id="@+id/DatePickerButton"
-            android:layout_width="161dp"
-            android:layout_height="wrap_content"
+            android:layout_width="162dp"
+            android:layout_height="35dp"
             android:text="Tarih Seç" />
+
+
+        </LinearLayout>
 
         <EditText
             android:id="@+id/emailText"
