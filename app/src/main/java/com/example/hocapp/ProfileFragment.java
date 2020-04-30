@@ -6,19 +6,26 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.BreakIterator;
+import java.util.Map;
 
 
 public class ProfileFragment extends Fragment {
@@ -31,9 +38,11 @@ public class ProfileFragment extends Fragment {
 
     }
 
-    private FirebaseAuth auth;
+    private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth.AuthStateListener authStateListener;
+    public FirebaseUser firebaseUser;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,41 +51,54 @@ public class ProfileFragment extends Fragment {
         View view= inflater.inflate(R.layout.fragment_profile, container, false);
 
         TextView textView1 = view.findViewById(R.id.text);
-        auth = FirebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore =FirebaseFirestore.getInstance();
 
-        authStateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user= firebaseAuth.getCurrentUser();
-                // Eğer geçerli bir kullanıcı oturumu yoksa LoginActivity e geçilir.
-                // Oturum kapatma işlemi yapıldığında bu sayede LoginActivity e geçilir.
-
-            }
-        };
-
-        final FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
-
-
-        textView1.setText(user.getEmail());
-
-
-
+        firebaseUser = firebaseAuth.getCurrentUser();    // kullanici giris yapmis ise deger döndürür ,kimse yok ise null dondurur
+        String email=firebaseUser.getEmail();
+        getDataUserTypeFromFirestore();
 
         return view;
+    }
+
+    public void getDataUserTypeFromFirestore()              //Giris yapan kullanici tipini firestoredan ceker. Anasayfada ögrenci veya ögretmen oldugunu anlamamıza yarar.
+    {
+        CollectionReference collectionReference =firebaseFirestore.collection("Users");
+
+        collectionReference.whereEqualTo("email",firebaseUser.getEmail().toString()).addSnapshotListener(new EventListener<QuerySnapshot>() {   //firebase den gelen datayi giris yaparken kullanilan e maile göre filtreliyoruz.
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+
+                if (e !=null){
+                    Toast.makeText(getContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();    //eger firebasefirestoredan data okunanamazsa exception e yi göster
+                }
+
+                if(queryDocumentSnapshots!=null)
+                {
+                    for (DocumentSnapshot snapshot : queryDocumentSnapshots.getDocuments())
+                    {
+                        Map<String,Object> data= snapshot.getData();   //map olarak datayi geri cekiyoruz
+
+                        String userType =(String) data.get("userType");  //gelecek verinin string oldugundan emin oldugumuz icin casting islemi yapabiliyoruz
+
+                    }
+                }
+
+
+
+            }
+        });
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        auth.addAuthStateListener(authStateListener);
+
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if(authStateListener!=null){
-            auth.removeAuthStateListener(authStateListener);
-        }
+
     }
 }
