@@ -30,6 +30,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ZoomControls;
 
 
@@ -38,6 +39,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -149,21 +151,6 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
         });
 
 
-        /*
-        ZoomControls zoom=(ZoomControls)view.findViewById(R.id.zoom);  //Zoom out, Zoom in kontrol
-        zoom.setOnZoomOutClickListener(new View.OnClickListener() {         //Zoom out tıklandı
-            @Override
-            public void onClick(View view) {
-                mMap.animateCamera(CameraUpdateFactory.zoomOut());
-            }
-        });
-        zoom.setOnZoomInClickListener(new View.OnClickListener() {      //Zoom in tıklandı
-            @Override
-            public void onClick(View view) {
-                mMap.animateCamera(CameraUpdateFactory.zoomIn());
-            }
-        });
-*/
         getDataFirebaseLesson();                                                              //firebaseden ders adlarını alan fonksiyon cagirildi.
         lessonSpinner.setAdapter(new ArrayAdapter<>(this.getActivity(),android.R.layout.simple_spinner_dropdown_item,lessonList));  //Dersler Spinner
 
@@ -195,11 +182,12 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
 
                 if(position==0)
                 {
-                    System.out.println("gg");           //Spinner 0 konumunda seçim yapılmadı
+                    Toast.makeText(getContext(),"Lütfen Ders Seçimi Yapınız",Toast.LENGTH_LONG).show();       //Spinner 0 konumunda seçim yapılmadı
 
                 }
                 else
                 {
+                    Toast.makeText(getContext(),"basarılı",Toast.LENGTH_LONG).show();
                     System.out.println(lessonFieldList.get(position));         //Spinner 0 konumunda değil. Seçim yapıldı.
                 }
 
@@ -263,11 +251,14 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
     {
         super.onViewCreated(view, savedInstanceState);
         mMapView = (MapView) view.findViewById(R.id.mapViewLayout);
+
+
         if(mMapView != null)
         {
             mMapView.onCreate(null);
             mMapView.onResume();
             mMapView.getMapAsync(this);
+
         }
     }
 
@@ -275,7 +266,16 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         MapsInitializer.initialize(getContext());
         googleMap.getUiSettings().setMyLocationButtonEnabled(true);
+        googleMap.getUiSettings().setZoomControlsEnabled(true);             //Zoom control
         mMap = googleMap;
+        mMap.setMyLocationEnabled(true);                                //My current Location Button
+        mMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
+            @Override
+            public boolean onMyLocationButtonClick() {
+                System.out.println("tıklandı");
+                return false;
+            };
+        });
         locationManager = (LocationManager)this.getActivity().getSystemService(Context.LOCATION_SERVICE);
         locationListener = new LocationListener() {
 
