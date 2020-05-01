@@ -59,6 +59,7 @@ public class SignInActivity extends AppCompatActivity {
 
         }
 
+
     }
 
     public void getDataUserTypeFromFirestore()              //Giris yapan kullanici tipini firestoredan ceker. Anasayfada ögrenci veya ögretmen oldugunu anlamamıza yarar.

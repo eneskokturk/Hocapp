@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 
 import java.text.BreakIterator;
 import java.util.Map;
@@ -42,6 +44,14 @@ public class ProfileFragment extends Fragment {
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth.AuthStateListener authStateListener;
     public FirebaseUser firebaseUser;
+    ImageView profilePicture;
+    String userType;
+    String userName;
+    String userGender;
+    String userEmail;
+    String userBiography;
+    String userBirthday;
+    public String userPictureUrl;
 
 
     @Override
@@ -53,15 +63,21 @@ public class ProfileFragment extends Fragment {
         TextView textView1 = view.findViewById(R.id.text);
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore =FirebaseFirestore.getInstance();
+        profilePicture=view.findViewById(R.id.profilePicture);
+
 
         firebaseUser = firebaseAuth.getCurrentUser();    // kullanici giris yapmis ise deger döndürür ,kimse yok ise null dondurur
-        String email=firebaseUser.getEmail();
-        getDataUserTypeFromFirestore();
+        getDataUserFromFirestore();
+
+
+
+
+
 
         return view;
     }
 
-    public void getDataUserTypeFromFirestore()              //Giris yapan kullanici tipini firestoredan ceker. Anasayfada ögrenci veya ögretmen oldugunu anlamamıza yarar.
+    public void getDataUserFromFirestore()              //Giris yapan kullanici tipini firestoredan ceker. Anasayfada ögrenci veya ögretmen oldugunu anlamamıza yarar.
     {
         CollectionReference collectionReference =firebaseFirestore.collection("Users");
 
@@ -79,8 +95,15 @@ public class ProfileFragment extends Fragment {
                     {
                         Map<String,Object> data= snapshot.getData();   //map olarak datayi geri cekiyoruz
 
-                        String userType =(String) data.get("userType");  //gelecek verinin string oldugundan emin oldugumuz icin casting islemi yapabiliyoruz
-
+                        userType =(String) data.get("userType");  //gelecek verinin string oldugundan emin oldugumuz icin casting islemi yapabiliyoruz
+                        userName= (String) data.get("userName");
+                        userGender =(String) data.get("gender");
+                        userEmail=(String) data.get("email");
+                        userBiography=(String) data.get("biography");
+                        userBirthday=(String) data.get("birthday");
+                        userPictureUrl=(String) data.get("downloadurl");
+                        Picasso.get().load(userPictureUrl).into(profilePicture);  //picasso kütüphanesi ile profil fotoğrafı firebaseden alindi ve basildi
+                                                                                    //try and catch içine alarak userPictureUrl olmadıgı zamanlarda avatar bastirilabilir
                     }
                 }
 
