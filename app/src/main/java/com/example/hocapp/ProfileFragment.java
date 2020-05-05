@@ -44,6 +44,7 @@ public class ProfileFragment extends Fragment {
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth.AuthStateListener authStateListener;
     public FirebaseUser firebaseUser;
+    TextView text;
     ImageView profilePicture;
     String userType;
     String userName;
@@ -64,7 +65,7 @@ public class ProfileFragment extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore =FirebaseFirestore.getInstance();
         profilePicture=view.findViewById(R.id.profilePicture);
-
+        text=view.findViewById(R.id.text);
 
         firebaseUser = firebaseAuth.getCurrentUser();    // kullanici giris yapmis ise deger döndürür ,kimse yok ise null dondurur
         getDataUserFromFirestore();
@@ -103,7 +104,8 @@ public class ProfileFragment extends Fragment {
                         userBirthday=(String) data.get("birthday");
                         userPictureUrl=(String) data.get("downloadurl");
                         Picasso.get().load(userPictureUrl).into(profilePicture);  //picasso kütüphanesi ile profil fotoğrafı firebaseden alindi ve basildi
-                                                                                    //try and catch içine alarak userPictureUrl olmadıgı zamanlarda avatar bastirilabilir
+                        System.out.println(userName);//try and catch içine alarak userPictureUrl olmadıgı zamanlarda avatar bastirilabilir
+                        text.setText(userName);
                     }
                 }
 

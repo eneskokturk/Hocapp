@@ -20,7 +20,7 @@
             <com.google.android.gms.maps.MapView
                 android:id="@+id/mapViewLayout"
                 android:layout_width="match_parent"
-                android:layout_height="200dp" />
+                android:layout_height="100dp" />
 
 
             <LinearLayout
@@ -32,11 +32,12 @@
                 >
 
                 <EditText
+                    android:id="@+id/mapsText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:shadowColor="@color/darkOrange"
-                    android:id="@+id/mapsText" />
+                    android:hint="Adres Giriniz"
+                    android:shadowColor="@color/darkOrange" />
 
                 <Button
                     android:background="@drawable/button"
@@ -125,7 +126,7 @@
 
                 android:id="@+id/createLessonButton"
                 android:layout_width="150dp"
-                android:layout_height="40dp"
+                android:layout_height="31dp"
                 android:layout_gravity="center"
                 android:layout_margin="30dp"
                 android:background="@drawable/button"
