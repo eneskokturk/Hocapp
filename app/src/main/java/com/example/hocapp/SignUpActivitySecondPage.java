@@ -24,8 +24,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -38,6 +40,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 
@@ -60,6 +63,7 @@ public class SignUpActivitySecondPage extends AppCompatActivity {
     String genderDatabase;
     String userTypeDatabase;
     String passwordDatabase;
+    String userID;
     ProgressBar progressBarSignUp;
 
     @Override
@@ -82,6 +86,7 @@ public class SignUpActivitySecondPage extends AppCompatActivity {
         createUserButton = findViewById(R.id.createUserButton);
         userBiographyText = findViewById(R.id.userBiography);
         progressBarSignUp =findViewById(R.id.progressBarSignUp);
+
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseStorage = FirebaseStorage.getInstance();
@@ -121,6 +126,7 @@ public class SignUpActivitySecondPage extends AppCompatActivity {
 
                             String userBiography = userBiographyText.getText().toString();
 
+
                             HashMap<String, Object> userData = new HashMap<>();
 
                             userData.put("userName",userNameDatabase);
@@ -137,6 +143,7 @@ public class SignUpActivitySecondPage extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
 
+                                    FirebaseUser user=firebaseAuth.getCurrentUser();
 
                                 }
                             }).addOnFailureListener(new OnFailureListener() {

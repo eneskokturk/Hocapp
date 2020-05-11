@@ -38,6 +38,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -71,7 +72,10 @@ public class ProfileFragment extends Fragment {
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth.AuthStateListener authStateListener;
     public FirebaseUser firebaseUser;
+    private CollectionReference collectionReference;
     private DatabaseReference databaseReference;
+    private DocumentReference documentReference;
+
 
     //storage
     StorageReference storageReference;
@@ -123,9 +127,17 @@ public class ProfileFragment extends Fragment {
         storagePermissions = new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
 
+        //init firebase
         firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
         firebaseFirestore =FirebaseFirestore.getInstance();
+
+        databaseReference =firebaseDatabase.getReference("Users");
+
         storageReference =getInstance().getReference(); //firebase storage reference
+
+
+
 
 
 
@@ -278,25 +290,24 @@ public class ProfileFragment extends Fragment {
                     HashMap<String, Object> result = new HashMap<>();
                     result.put(key,value);
 
-                    //databaseReference.child(user.getUid()).updateChildren(result)
-                    firebaseFirestore.collection("Users").document(firebaseUser.getEmail()).update(result)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    //updated, dismiss progress
-                                    pd.dismiss();
-                                    Toast.makeText(getActivity(),"Updated...",Toast.LENGTH_SHORT).show();
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    //failed, dismiss progress, get and show error message
-                                    pd.dismiss();
-                                    Toast.makeText(getActivity(),""+e.getMessage(),Toast.LENGTH_SHORT).show();
 
-                                }
-                            });
+                    databaseReference.child(firebaseUser.getUid()).updateChildren(result).addOnSuccessListener(new OnSuccessListener<Void>() {
+
+                   // firebaseFirestore.collection("Users").document(currentDocumentId[0]).update(result)
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            pd.dismiss();
+                            Toast.makeText(getActivity(),"Updated...",Toast.LENGTH_SHORT).show();
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            pd.dismiss();
+                            Toast.makeText(getActivity(),""+e.getMessage(),Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
 
                 }
                 else{
