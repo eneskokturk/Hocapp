@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -100,96 +101,101 @@ public class SignUpActivitySecondPage extends AppCompatActivity {
         passwordDatabase=password;
 
         progressBarSignUp.setVisibility(View.INVISIBLE);
-    }
 
-    public void createUserButtonClicked(View view)
-    {
+        if(firebaseAuth.getCurrentUser()!=null){
+            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+            finish();
+        }
 
+        createUserButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-        if (userImageData != null) {
-            progressBarSignUp.setVisibility(View.VISIBLE);
+                if (userImageData != null) {
+                    progressBarSignUp.setVisibility(View.VISIBLE);
 
-            UUID uuid = UUID.randomUUID();                      //universal unique id kullanici profil fotograflari icin id olusturma
-            final String imageName = "images/" + uuid + ".jpg";
+                    UUID uuid = UUID.randomUUID();                      //universal unique id kullanici profil fotograflari icin id olusturma
+                    final String imageName = "images/" + uuid + ".jpg";
 
-            storageReference.child(imageName).putFile(userImageData).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-
-                    StorageReference newReference = FirebaseStorage.getInstance().getReference(imageName); //Download URL aliyoruz
-                    newReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    storageReference.child(imageName).putFile(userImageData).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
-                        public void onSuccess(Uri uri) {
-
-                            String downloadUrl = uri.toString();
-
-                            String userBiography = userBiographyText.getText().toString();
-
-
-                            HashMap<String, Object> userData = new HashMap<>();
-
-                            userData.put("userName",userNameDatabase);
-                            userData.put("email",emailDatabase);
-                            userData.put("birthday",birthdayDatabase);
-                            userData.put("gender",genderDatabase);
-                            userData.put("userType",userTypeDatabase);
-                            userData.put("downloadurl",downloadUrl);
-                            userData.put("biography",userBiography);
-                            userData.put("date", FieldValue.serverTimestamp());
-
-                            firebaseAuth.createUserWithEmailAndPassword(emailDatabase,passwordDatabase).addOnSuccessListener(new OnSuccessListener<AuthResult>() //yeni üye olustur
-                            {
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            StorageReference storageReference=FirebaseStorage.getInstance().getReference(imageName);
+                            storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
-                                public void onSuccess(AuthResult authResult) {
+                                public void onSuccess(Uri uri) {
 
-                                    FirebaseUser user=firebaseAuth.getCurrentUser();
+                                    final String downloadUrl= uri.toString();
+                                    firebaseAuth.createUserWithEmailAndPassword(emailDatabase, passwordDatabase).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<AuthResult> task) {
+                                            if (task.isSuccessful()) {
+                                                Intent intent = new Intent(SignUpActivitySecondPage.this, SignInActivity.class);
+                                                Toast.makeText(getApplicationContext(), "Üye Kaydınız Başarılı Bir Şekilde Oluşturulmuştur. Hoşgeldiniz..", Toast.LENGTH_LONG).show();
+                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                userID = firebaseAuth.getCurrentUser().getUid();
+                                                DocumentReference documentReference = firebaseFirestore.collection("Users").document(userID);
 
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(SignUpActivitySecondPage.this,e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
+
+                                                String userBiography = userBiographyText.getText().toString();
+                                                HashMap<String, Object> userData = new HashMap<>();
+
+                                                userData.put("downloadUrl",downloadUrl);
+                                                userData.put("userName", userNameDatabase);
+                                                userData.put("email", emailDatabase);
+                                                userData.put("birthday", birthdayDatabase);
+                                                userData.put("gender", genderDatabase);
+                                                userData.put("userType", userTypeDatabase);
+                                                userData.put("biography", userBiography);
+                                                userData.put("date", FieldValue.serverTimestamp());
+                                                documentReference.set(userData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Log.d("TAG", "onSuccess: user Profile is created for" + userID);
+                                                    }
+                                                }).addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Log.d("TAG", "onFailure:" + e.toString());
+                                                    }
+                                                });
+
+
+                                                startActivity(intent);
+
+                                            }
+
+                                        }
+                                    });
+
                                 }
                             });
-
-
-
-                            firebaseFirestore.collection("Users").add(userData).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                @Override
-                                public void onSuccess(DocumentReference documentReference) {
-
-                                    Intent intent = new Intent(SignUpActivitySecondPage.this,SignInActivity.class);
-                                    Toast.makeText(getApplicationContext(),"Üye Kaydınız Başarılı Bir Şekilde Oluşturulmuştur. Hoşgeldiniz..",Toast.LENGTH_LONG).show();
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                    startActivity(intent);
-
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(SignUpActivitySecondPage.this,e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
-                                }
-                            });
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(SignUpActivitySecondPage.this,e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
 
                         }
                     });
+
+
+
+
+
                 }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(SignUpActivitySecondPage.this,e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
+                else {
+                    Toast.makeText(getApplicationContext(),"Lütfen Profil Fotoğrafı Seçiniz.",Toast.LENGTH_LONG).show();
                 }
-            });
+
+            }
+        });
+
+
         }
 
-        else{
 
-            Toast.makeText(getApplicationContext(),"Lütfen Profil Fotoğrafı Seçiniz.",Toast.LENGTH_LONG).show();
 
-        }
-
-    }
     public void selectImage(View view) {                                                        //kullanicidan galeriye erisim izni
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
