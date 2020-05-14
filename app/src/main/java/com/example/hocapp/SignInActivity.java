@@ -48,7 +48,7 @@ public class SignInActivity extends AppCompatActivity {
 
        loadingProgress.setVisibility(View.INVISIBLE);
 
-        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();    // kullanici giris yapmis ise deger döndürür ,kimse yok ise null dondurur
+       FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();    // kullanici giris yapmis ise deger döndürür ,kimse yok ise null dondurur
 
         if (firebaseUser != null) {                                    //eger null degil ise giris ekrani yerine mainactivity cagirilir.
 

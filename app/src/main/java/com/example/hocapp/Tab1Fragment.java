@@ -1,4 +1,3 @@
-
 package com.example.hocapp;
 
 
@@ -21,6 +20,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,8 +51,10 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.Exclude;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -78,9 +80,10 @@ import javax.annotation.Nullable;
 public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
 
 
-
-    Spinner lessonSpinner;          //Dersler Spinner
-    Spinner lessonFieldSpinner;     //Ders alanları Spinner
+    String userID;
+    String userFirebaseID;
+    String userFirebaseName;
+    String userFirebaseEmail;
     EditText lessonPriceText;           //Ders Ücreti
     Button createLessonButton;       //ilan yayınlama butonu
     GoogleMap mMap;
@@ -96,10 +99,11 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
     ArrayList<String> lessonList;    //Dersler Dizisi
     ArrayList<String> lessonFieldList;      //Ders Alanları Dizisi
 
-    private FirebaseFirestore firebaseFirestore;
+    private FirebaseFirestore firebaseFirestore=FirebaseFirestore.getInstance();
     private FirebaseAuth firebaseAuth;
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
+    private CollectionReference collectionReference=firebaseFirestore.collection("Users");
     public Tab1Fragment() {
         // Required empty public constructor
     }
@@ -169,7 +173,11 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
 
         createLessonButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view) {                //ilan olustur butonu
+
+                userFirebaseID =firebaseAuth.getCurrentUser().getUid();
+                userFirebaseEmail=firebaseAuth.getCurrentUser().getEmail();
+
 
 
                 String lessonPriceDatabase=lessonPriceText.getText().toString();            //Ders ücreti Stringe cevrildi.
@@ -191,30 +199,26 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
                 lessonData.put("lessonField",lessonFieldDatabase);
                 lessonData.put("lessonPrice",lessonPriceDatabase);
                 lessonData.put("lessonLatLng",lessonLocationDatabase);
+                lessonData.put("lessonUserEmail",userFirebaseEmail);
 
-                String emailText;
-                emailText="enesægmail.com";
-                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                DocumentReference documentReference=firebaseFirestore.collection("Users").document(firebaseUser.getUid());
-                CollectionReference collectionReference =firebaseFirestore.collection("Users");
-                System.out.println(collectionReference.whereEqualTo("email",emailText));
-                System.out.println(collectionReference);
-               firebaseFirestore.collection("Users").document().collection("UserLesson").add(lessonData).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                   @Override
-                   public void onSuccess(DocumentReference documentReference) {
-                       Toast.makeText(getContext(), "basarili", Toast.LENGTH_SHORT).show();
-                   }
-               }).addOnFailureListener(new OnFailureListener() {
-                   @Override
-                   public void onFailure(@NonNull Exception e) {
-                       Toast.makeText(getContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
+                firebaseFirestore.collection("UserLessons").add(lessonData).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Toast.makeText(getContext(), "İlanınız oluşturulmuştur..", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
 
-                   }
-               });
+                    }
+                });
 
 
             }
         });
+
+
 
         getDataFirebaseLesson();                                                              //firebaseden ders adlarını alan fonksiyon cagirildi.
         lessonSpinner.setAdapter(new ArrayAdapter<>(this.getActivity(),android.R.layout.simple_spinner_dropdown_item,lessonList));  //Dersler Spinner
@@ -223,7 +227,7 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                    System.out.println(lessonList.get(position));       //Spinner 0 konumunda değil. Seçim yapıldı.
+                System.out.println(lessonList.get(position));       //Spinner 0 konumunda değil. Seçim yapıldı.
 
             }
 
@@ -240,7 +244,7 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                    //System.out.println(lessonFieldList.get(position));         //Spinner 0 konumunda değil. Seçim yapıldı.
+                //System.out.println(lessonFieldList.get(position));         //Spinner 0 konumunda değil. Seçim yapıldı.
 
             }
             @Override
@@ -252,6 +256,8 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
 
         return view;
     }
+
+
 
     public void getDataFirebaseLesson()                                 //ders adları firebaseden cekildi ve spinnerlara gönderilmek uzere degiskene atıldı
     {
@@ -269,7 +275,6 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
                     String lessonsForDatabase =(String) data.get("lessonsDatabase");  //gelecek verinin string oldugundan emin oldugumuz icin casting islemi yapabiliyoruz
 
                     lessonList.add(lessonsForDatabase);
-
                 }
 
             }

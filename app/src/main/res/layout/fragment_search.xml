@@ -1,9 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SearchFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"/>
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:orientation="vertical"
+            android:gravity="center">
+
+
+            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                android:id="@+id/lessonSpinner"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_margin="20dp"
+                android:background="@drawable/shape_spinner"
+                android:gravity="center"
+                android:spinnerMode="dropdown"
+                app:hintText="Lütfen Ders Seçimiz Yapınız.." />
+
+
+            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                android:id="@+id/lessonFieldSpinner"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/shape_spinner"
+                android:gravity="center"
+                android:spinnerMode="dropdown"
+                app:hintText="Lütfen Alan Seçimi Yapınız" />
+
+
+
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="right">
+
+
+            <Button
+
+                android:id="@+id/getLessonButton"
+                android:layout_width="150dp"
+                android:layout_height="31dp"
+                android:layout_gravity="right"
+                android:layout_margin="30dp"
+                android:background="@drawable/button"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:text="İlanları Listele"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="17sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="left">
+
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/mapViewSearchLayout"
+                android:layout_width="match_parent"
+                android:layout_height="350dp" />
+
+
+            />
+
+
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
 
 </FrameLayout>
