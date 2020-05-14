@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.ImageDecoder;
 import android.net.Uri;
 import android.os.Build;
@@ -48,6 +49,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
@@ -57,6 +59,7 @@ import java.security.Key;
 import java.text.BreakIterator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import static android.app.Activity.RESULT_OK;
 import static com.google.firebase.storage.FirebaseStorage.getInstance;
@@ -84,9 +87,10 @@ public class ProfileFragment extends Fragment {
 
     //storage
     StorageReference storageReference;
-    //path where image of user profile will be stored
-    String storePath = "User_Profile_Imgs/";
 
+
+    TextView signOut;
+    Bitmap selectedImage;
     TextView text;
     TextView userBio;
     ImageView profilePicture;
@@ -152,6 +156,7 @@ public class ProfileFragment extends Fragment {
 
 
         profilePicture=view.findViewById(R.id.profilePicture);
+        signOut=view.findViewById(R.id.signOut);
         text=view.findViewById(R.id.text);
         userBio=view.findViewById(R.id.userBio);
         fab=view.findViewById(R.id.fab);
@@ -190,11 +195,26 @@ public class ProfileFragment extends Fragment {
           }
       });
 
+      signOut.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+
+              FirebaseAuth.getInstance().signOut();
+              Intent intent = new Intent(getActivity(), SignInActivity.class);
+              startActivity(intent);
+          }
+      });
+
+
+
+
 
 
 
         return view;
     }
+
+
 
     private void showEditProfileDialog(){
 
@@ -362,6 +382,109 @@ public class ProfileFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+
+        if (requestCode == 1) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Intent intentToGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intentToGallery,2);
+            }
+        }
+
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {           //galeri izin sdk 28 ve altı icin ayrildi
+
+        //This method will be called after picking image from gallery
+        if (requestCode == 2 && resultCode == RESULT_OK && data != null ) {
+
+            userImageData = data.getData();
+
+            try {
+
+                if (Build.VERSION.SDK_INT >= 28) {
+                    ImageDecoder.Source source = ImageDecoder.createSource(getActivity().getContentResolver(),userImageData);
+                    selectedImage = ImageDecoder.decodeBitmap(source);
+                    profilePicture.setImageBitmap(selectedImage);
+                    uploadProfilePicture(userImageData);
+                } else {
+                    selectedImage = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),userImageData);
+                    profilePicture.setImageBitmap(selectedImage);
+                    uploadProfilePicture(userImageData);
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void uploadProfilePicture(Uri uri) {
+        //show progress
+        pd.show();
+
+        if (userImageData != null) {
+
+            final UUID uuid = UUID.randomUUID();                      //universal unique id kullanici profil fotograflari icin id olusturma
+            final String imageName = "images/" + uuid + ".jpg";
+
+            StorageReference storageReference2nd = storageReference.child(imageName);
+            storageReference2nd.putFile(userImageData).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                    Task<Uri> uriTask=taskSnapshot.getStorage().getDownloadUrl();
+                    while (!uriTask.isSuccessful());
+                    Uri downloadUrl= uriTask.getResult();
+
+                    if(uriTask.isSuccessful()){
+                        HashMap<String, Object> results = new HashMap<>();
+
+                      results.put("downloadUrl",downloadUrl.toString());
+
+                        firebaseFirestore.collection("Users").document(userId).update(results).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                pd.dismiss();
+                                Toast.makeText(getActivity(),"Image Updated...",Toast.LENGTH_SHORT).show();
+
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                pd.dismiss();
+                                Toast.makeText(getActivity(),"Error Updating Image...",Toast.LENGTH_SHORT).show();
+
+                            }
+                        });
+
+                    }
+                    else{
+                        //error
+                        pd.dismiss();
+                        Toast.makeText(getActivity(),"Some error occured",Toast.LENGTH_SHORT).show();
+                    }
+
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    pd.dismiss();
+                    Toast.makeText(getActivity(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                }
+            });
+
+
+        }
+    }
 
 
   /*  public void getDataUserFromFirestore()              //Giris yapan kullanici bilgilerini çeker.

@@ -61,9 +61,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
-
-                >
+                android:layout_gravity="center">
 
 
                 <TextView
@@ -78,10 +76,40 @@
 
             </LinearLayout>
 
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+
+                >
+
+                <TextView
+                    android:id="@+id/signOut"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:clickable="true"
+                    android:contextClickable="true"
+                    android:fontFamily="sans-serif"
+                    android:gravity="bottom|center"
+                    android:linksClickable="true"
+                    android:onClick="signOutClicked"
+                    android:text="@string/signOutText"
+                    android:textAllCaps="false"
+                    android:textColor="#D95100"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
         </LinearLayout>
 
 
     </ScrollView>
+
+
 
 
     <!-- Floating Action Button -->

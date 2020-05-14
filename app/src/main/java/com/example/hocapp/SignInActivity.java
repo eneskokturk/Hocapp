@@ -127,6 +127,7 @@ public class SignInActivity extends AppCompatActivity {
 
     public void signUpClicked(View view) {     //Üye Ol
 
+
         Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
         startActivity(intent);
 
