@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Hocapp</string>
 
+    <string name="signOutText"><u>Çıkış Yap</u></string>
+
     <string name="tab_text_1">İlan Ekle</string>
     <string name="tab_text_2">İlan Listele</string>
     <string-array name="dersler">
