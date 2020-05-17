@@ -80,8 +80,7 @@ import javax.annotation.Nullable;
 public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
 
 
-    String userID;
-    String userFirebaseID;
+    String userId;
     String userFirebaseName;
     String userFirebaseEmail;
     EditText lessonPriceText;           //Ders Ücreti
@@ -175,7 +174,7 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onClick(View view) {                //ilan olustur butonu
 
-                userFirebaseID =firebaseAuth.getCurrentUser().getUid();
+                userId =firebaseAuth.getCurrentUser().getUid();
                 userFirebaseEmail=firebaseAuth.getCurrentUser().getEmail();
 
 
@@ -199,6 +198,7 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
                 lessonData.put("lessonField",lessonFieldDatabase);
                 lessonData.put("lessonPrice",lessonPriceDatabase);
                 lessonData.put("lessonLatLng",lessonLocationDatabase);
+                //lessonData.put("lessonUserId",userId);
                 lessonData.put("lessonUserEmail",userFirebaseEmail);
 
                 firebaseFirestore.collection("UserLessons").add(lessonData).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
