@@ -327,7 +327,7 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
         googleMap.getUiSettings().setZoomControlsEnabled(true);             //Zoom control
 
         mMap = googleMap;
-        mMap.setMyLocationEnabled(true);                                //My current Location Button
+        //mMap.setMyLocationEnabled(true);                                //My current Location Button
 
 
         locationManager = (LocationManager)this.getActivity().getSystemService(Context.LOCATION_SERVICE);

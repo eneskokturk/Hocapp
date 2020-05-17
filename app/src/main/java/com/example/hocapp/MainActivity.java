@@ -8,8 +8,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -20,7 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
-
+    public static LayoutInflater inflater;
 
     private FirebaseAuth firebaseAuth;
     private ActionBar toolbar;  //Navigation Bar
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitle("Search");
         loadFragment(new SearchFragment());
 
+        inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         BottomNavigationView navigation = findViewById(R.id.navigation);                    //.xml dosyamızda tanımladığımız id'si navigasyon olan BottomNavigationView'in nesnesini oluşturduk.
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);  //listener ekledik.
