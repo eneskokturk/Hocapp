@@ -81,22 +81,7 @@
                 android:textSize="17sp" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="left">
 
-            <com.google.android.gms.maps.MapView
-                android:id="@+id/mapViewSearchLayout"
-                android:layout_width="match_parent"
-                android:layout_height="350dp" />
-
-
-            />
-
-
-        </LinearLayout>
 
 
 
