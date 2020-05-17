@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:orientation="vertical"
-android:layout_width="300dp"
-android:layout_height="wrap_content"
-android:divider="@color/darkOrange"
-android:showDividers="middle"
+    android:orientation="vertical"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:divider="@color/darkOrange"
+    android:showDividers="middle"
 
     >
-<TextView
-    android:id="@+id/textView"
-    android:layout_width="200dp"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:ellipsize="marquee"
-    android:textSize="18sp"
-    android:textColor="@color/darkOrange" />
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:ellipsize="marquee"
+        android:textSize="18sp"
+        android:textColor="@color/darkOrange" />
 
 </LinearLayout>

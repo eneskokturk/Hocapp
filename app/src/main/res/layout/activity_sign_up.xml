@@ -7,204 +7,204 @@
     tools:context=".SignUpActivity">
 
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="79dp"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/logo"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/hocapp_icon2" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Üyelik Oluştur"
-            android:textColor="#D95100"
-            android:fontFamily="sans-serif"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            android:layout_marginLeft="10dp"/>
-
-        <RadioGroup
-            android:id="@+id/maleOrFemale"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:gravity="center">
-
-            <RadioButton
-                android:id="@+id/radioFemale"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Kadın"
-                android:layout_margin="10dp"
-                android:checked="true"
-                android:buttonTint="@color/darkOrange"
-                 />
-
-            <RadioButton
-                android:id="@+id/radioMale"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/darkOrange"
-                android:layout_margin="10dp"
-                android:text="Erkek" />
-
-        </RadioGroup>
-
-        <RadioGroup
-            android:id="@+id/studentOrTeacher"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
-
-        <RadioButton
-            android:id="@+id/radioStudent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:buttonTint="@color/darkOrange"
-            android:layout_margin="10dp"
-            android:text="Öğrenci"
-            />
-
-
-        <RadioButton
-            android:id="@+id/radioTeacher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:buttonTint="@color/darkOrange"
-            android:layout_margin="10dp"
-            android:text="Öğretmen"
-             />
-
-        </RadioGroup>
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="center">
+        android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/nameText"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/shape_sign_up"
-            android:drawablePadding="10dp"
-            android:hint="İsim Soyisim"
-            android:inputType="textPersonName"
+            android:layout_height="79dp"
+            android:gravity="center"
+            android:orientation="vertical">
 
-            />
-        <EditText
-            android:id="@+id/passwordText"
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/hocapp_icon2" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/shape_sign_up"
-            android:drawablePadding="10dp"
-            android:hint="Şifre"
-            android:inputType="textPassword"
-            />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/passwordAgainText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/shape_sign_up"
-            android:drawablePadding="10dp"
-            android:hint="Şifre Tekrar"
-            android:inputType="textPassword"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Üyelik Oluştur"
+                android:textColor="#D95100"
+                android:fontFamily="sans-serif"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_marginLeft="10dp"/>
 
+            <RadioGroup
+                android:id="@+id/maleOrFemale"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <RadioButton
+                    android:id="@+id/radioFemale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Kadın"
+                    android:layout_margin="10dp"
+                    android:checked="true"
+                    android:buttonTint="@color/darkOrange"
+                    />
+
+                <RadioButton
+                    android:id="@+id/radioMale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/darkOrange"
+                    android:layout_margin="10dp"
+                    android:text="Erkek" />
+
+            </RadioGroup>
+
+            <RadioGroup
+                android:id="@+id/studentOrTeacher"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <RadioButton
+                    android:id="@+id/radioStudent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:buttonTint="@color/darkOrange"
+                    android:layout_margin="10dp"
+                    android:text="Öğrenci"
+                    />
+
+
+                <RadioButton
+                    android:id="@+id/radioTeacher"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/darkOrange"
+                    android:layout_margin="10dp"
+                    android:text="Öğretmen"
+                    />
+
+            </RadioGroup>
+
+        </LinearLayout>
         <LinearLayout
             android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_gravity="center">
 
-        <EditText
-            android:id="@+id/birthdayText"
-            android:layout_width="162dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/shape_sign_up"
-            android:drawablePadding="10dp"
-            android:hint="Doğum Tarihi"
-            android:inputType="date"
+            <EditText
+                android:id="@+id/nameText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/shape_sign_up"
+                android:drawablePadding="10dp"
+                android:hint="İsim Soyisim"
+                android:inputType="textPersonName"
+
+                />
+            <EditText
+                android:id="@+id/passwordText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/shape_sign_up"
+                android:drawablePadding="10dp"
+                android:hint="Şifre"
+                android:inputType="textPassword"
+                />
+
+            <EditText
+                android:id="@+id/passwordAgainText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/shape_sign_up"
+                android:drawablePadding="10dp"
+                android:hint="Şifre Tekrar"
+                android:inputType="textPassword"/>
+
+            <LinearLayout
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center">
+
+                <EditText
+                    android:id="@+id/birthdayText"
+                    android:layout_width="162dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/shape_sign_up"
+                    android:drawablePadding="10dp"
+                    android:hint="Doğum Tarihi"
+                    android:inputType="date"
 
 
-            />
+                    />
 
-        <Button
-            android:layout_marginTop="6dp"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:textSize="17sp"
-            android:background="@drawable/button"
-            android:id="@+id/DatePickerButton"
-            android:layout_width="162dp"
-            android:layout_height="35dp"
-            android:text="Tarih Seç" />
+                <Button
+                    android:layout_marginTop="6dp"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="17sp"
+                    android:background="@drawable/button"
+                    android:id="@+id/DatePickerButton"
+                    android:layout_width="162dp"
+                    android:layout_height="35dp"
+                    android:text="Tarih Seç" />
+
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/emailText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/shape_sign_up"
+                android:drawablePadding="10dp"
+                android:hint="E-Mail"
+                android:inputType="textEmailAddress"
+                />
 
 
         </LinearLayout>
 
-        <EditText
-            android:id="@+id/emailText"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/shape_sign_up"
-            android:drawablePadding="10dp"
-            android:hint="E-Mail"
-            android:inputType="textEmailAddress"
-            />
+            android:layout_height="match_parent"
+            android:gravity="center|bottom"
+            android:orientation="vertical">
 
+            <Button
 
-    </LinearLayout>
+                android:id="@+id/signUpNextButton"
+                android:drawableRight="@drawable/ic_trending_flat_black_24dp"
+                android:paddingRight="130dp"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:layout_margin="30dp"
+                android:background="@drawable/button"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:onClick="signUpNextClicked"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="17sp" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center|bottom"
-        android:orientation="vertical">
-
-        <Button
-
-            android:id="@+id/signUpNextButton"
-            android:drawableRight="@drawable/ic_trending_flat_black_24dp"
-            android:paddingRight="130dp"
-            android:layout_width="300dp"
-            android:layout_height="40dp"
-            android:layout_margin="30dp"
-            android:background="@drawable/button"
-            android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:onClick="signUpNextClicked"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:textSize="17sp" />
+        </LinearLayout>
 
     </LinearLayout>
-
-</LinearLayout>
 </FrameLayout>
