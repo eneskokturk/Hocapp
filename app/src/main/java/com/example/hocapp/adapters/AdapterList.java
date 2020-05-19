@@ -21,6 +21,8 @@ public class AdapterList extends RecyclerView.Adapter {
     public ArrayList arrayList;
     public Context context;
 
+
+
     // RecyclerView recyclerView;
     public AdapterList(ArrayList listdata, Context context) {
 
@@ -35,7 +37,7 @@ public class AdapterList extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
 
         final listItem listItem = (AdapterList.listItem) holder;
         final LessonModel list = (LessonModel) arrayList.get(position);
@@ -45,6 +47,19 @@ public class AdapterList extends RecyclerView.Adapter {
         listItem.lessonPrice.setText(list.getLessonPrice());
 
 
+        listItem.image_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                arrayList.remove(position);
+                notifyDataSetChanged();
+
+            }
+        });
+    }
+
+
+    public void deleteItem(int position){
+       
     }
 
     @Override
@@ -57,6 +72,7 @@ public class AdapterList extends RecyclerView.Adapter {
         public TextView lessonName;
         public TextView lessonField;
         public TextView lessonPrice;
+        public ImageView image_delete;
 
 
 
@@ -65,6 +81,11 @@ public class AdapterList extends RecyclerView.Adapter {
             lessonName = itemView.findViewById(R.id.lessonName);
             lessonField = itemView.findViewById(R.id.lessonField);
             lessonPrice = itemView.findViewById(R.id.lessonPrice);
+            image_delete=itemView.findViewById(R.id.image_delete);
+
+
+
+
         }
     }
 

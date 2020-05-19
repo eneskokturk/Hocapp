@@ -5,14 +5,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="10dp"
     android:background="#f7f7f7"
-    app:cardCornerRadius="4dp"
+    app:cardCornerRadius="14dp"
     app:cardElevation="2dp">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/layout_style"
         android:orientation="vertical"
-        android:background="#f79999a9"
-
         android:gravity="center">
 
         <LinearLayout
@@ -23,6 +22,7 @@
             <TextView
                 android:textColor="@color/darkOrange"
                 android:textStyle="bold"
+                android:textSize="16dp"
                 android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -45,6 +45,25 @@
 
 
         </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:onClick="deleteLessonClicked"
+            android:clickable="true"
+            android:id="@+id/image_delete"
+            android:layout_gravity="top|right"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/delete_icon"
+            />
+
+    </LinearLayout>
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

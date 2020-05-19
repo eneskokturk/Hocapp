@@ -27,7 +27,7 @@
             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                 android:id="@+id/lessonSpinner"
                 android:layout_width="350dp"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
 
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
@@ -41,7 +41,7 @@
             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                 android:id="@+id/lessonFieldSpinner"
                 android:layout_width="350dp"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_centerVertical="true"
 
                 android:layout_gravity="center"

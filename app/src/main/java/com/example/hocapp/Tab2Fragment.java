@@ -35,6 +35,7 @@ import java.util.List;
 
 public class Tab2Fragment extends Fragment {
 
+    private AdapterList mAdapter;
     public Adapter lessonAdapter;
     private FirebaseFirestore firebaseFirestore= FirebaseFirestore.getInstance();
     private FirebaseAuth firebaseAuth;
@@ -71,6 +72,7 @@ public class Tab2Fragment extends Fragment {
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
 
+
         String currentEmail= FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
         System.out.println(currentEmail);
@@ -101,6 +103,7 @@ public class Tab2Fragment extends Fragment {
                         }
                     }
                 });
+
 
 
 
@@ -146,6 +149,8 @@ public class Tab2Fragment extends Fragment {
 
         return view;
     }
+
+
 
 }
 
