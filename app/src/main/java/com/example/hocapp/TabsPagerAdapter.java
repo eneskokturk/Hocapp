@@ -1,6 +1,8 @@
 package com.example.hocapp;
 
 import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -31,6 +33,7 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
         default: return null;
     }
     }
+
 
 
 

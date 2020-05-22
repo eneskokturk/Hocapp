@@ -35,6 +35,7 @@ import java.util.List;
 
 public class Tab2Fragment extends Fragment {
 
+    private AdapterList mAdapter;
     public Adapter lessonAdapter;
     private FirebaseFirestore firebaseFirestore= FirebaseFirestore.getInstance();
     private FirebaseAuth firebaseAuth;
@@ -64,12 +65,13 @@ public class Tab2Fragment extends Fragment {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_tab2,container,false);
 
-        recyclerView = view.findViewById(R.id.listView);
+        recyclerView=view.findViewById(R.id.listView);
 
         firebaseAuth= FirebaseAuth.getInstance();
         firebaseFirestore= FirebaseFirestore.getInstance();
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
+
 
         String currentEmail= FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
@@ -101,6 +103,7 @@ public class Tab2Fragment extends Fragment {
                         }
                     }
                 });
+
 
 
 
@@ -146,6 +149,8 @@ public class Tab2Fragment extends Fragment {
 
         return view;
     }
+
+
 
 }
 

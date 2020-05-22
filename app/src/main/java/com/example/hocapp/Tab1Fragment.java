@@ -174,47 +174,48 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onClick(View view) {                //ilan olustur butonu
 
-                userId =firebaseAuth.getCurrentUser().getUid();
-                userFirebaseEmail=firebaseAuth.getCurrentUser().getEmail();
+                userId = firebaseAuth.getCurrentUser().getUid();
+                userFirebaseEmail = firebaseAuth.getCurrentUser().getEmail();
 
 
-
-                String lessonPriceDatabase=lessonPriceText.getText().toString();            //Ders ücreti Stringe cevrildi.
-                String lessonDatabase=lessonSpinner.getSelectedItem().toString();       //Spinnerdan secilen ders adı String olarak tutuldu.
-                String lessonFieldDatabase=lessonFieldSpinner.getSelectedItem().toString();  //Spinnerdan secilen ders alanı String olarak tutuldu.
+                String lessonPriceDatabase = lessonPriceText.getText().toString();            //Ders ücreti Stringe cevrildi.
+                String lessonDatabase = lessonSpinner.getSelectedItem().toString();       //Spinnerdan secilen ders adı String olarak tutuldu.
+                String lessonFieldDatabase = lessonFieldSpinner.getSelectedItem().toString();  //Spinnerdan secilen ders alanı String olarak tutuldu.
                 LatLng lessonLocationDatabase;
 
-                if(latLngMapButton==null)
-                {
-                    lessonLocationDatabase=userLocation;
-                }else
-                {
-                    lessonLocationDatabase=latLngMapButton;
+                if (lessonPriceText.getText().toString().equals("")) {
+                    Toast.makeText(getContext(),"Lütfen Ders Ücreti Giriniz..",Toast.LENGTH_SHORT).show();
+                } else {
+                    if (latLngMapButton == null) {
+                        lessonLocationDatabase = userLocation;
+                    } else {
+                        lessonLocationDatabase = latLngMapButton;
+                    }
+
+                    HashMap<String, Object> lessonData = new HashMap<>();
+
+                    lessonData.put("lesson", lessonDatabase);
+                    lessonData.put("lessonField", lessonFieldDatabase);
+                    lessonData.put("lessonPrice", lessonPriceDatabase);
+                    lessonData.put("lessonLatLng", lessonLocationDatabase);
+                    //lessonData.put("lessonUserId",userId);
+                    lessonData.put("lessonUserEmail", userFirebaseEmail);
+
+                    firebaseFirestore.collection("UserLessons").add(lessonData).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Toast.makeText(getContext(), "İlanınız oluşturulmuştur..", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getContext(), e.getLocalizedMessage().toString(), Toast.LENGTH_LONG).show();
+
+                        }
+                    });
+
+
                 }
-
-                HashMap<String, Object> lessonData = new HashMap<>();
-
-                lessonData.put("lesson",lessonDatabase);
-                lessonData.put("lessonField",lessonFieldDatabase);
-                lessonData.put("lessonPrice",lessonPriceDatabase);
-                lessonData.put("lessonLatLng",lessonLocationDatabase);
-                //lessonData.put("lessonUserId",userId);
-                lessonData.put("lessonUserEmail",userFirebaseEmail);
-
-                firebaseFirestore.collection("UserLessons").add(lessonData).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Toast.makeText(getContext(), "İlanınız oluşturulmuştur..", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
-
-                    }
-                });
-
-
             }
         });
 

@@ -3,15 +3,22 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="10dp"
     android:background="#f7f7f7"
+
+    >
+    <!--
+    android:layout_margin="2dp"
     app:cardCornerRadius="14dp"
-    app:cardElevation="2dp">
+    app:cardElevation="2dp"
+
+    !-->
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/layout_style"
         android:orientation="vertical"
+        android:background="@drawable/card_style"
         android:gravity="center">
 
         <LinearLayout
@@ -26,47 +33,53 @@
                 android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/lessonName" />
+                android:id="@+id/forumTitle" />
+
 
             <TextView
                 android:layout_marginLeft="20dp"
                 android:layout_marginBottom="2dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/lessonField"
+                android:id="@+id/comments"
+                android:text="Tüm yanıtlar..."
+                android:textColor="@color/place_autocomplete_prediction_secondary_text"
                 />
+
 
             <TextView
                 android:layout_marginLeft="20dp"
+                android:layout_marginBottom="2dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/lessonPrice"
+                android:id="@+id/publisher"
                 />
+            <!--
+           <TextView
+               android:layout_marginLeft="20dp"
+               android:layout_marginBottom="2dp"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:id="@+id/forumContent"
+               />
+
+
+
+
+           <TextView
+               android:layout_gravity="right"
+               android:layout_marginLeft="20dp"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:id="@+id/contentDate"
+
+               />
+
+               !-->
 
 
         </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <!--
-
-        <ImageView
-            android:onClick="deleteLessonClicked"
-            android:clickable="true"
-            android:id="@+id/image_delete"
-            android:layout_gravity="top|right"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/delete_icon"
-            />
-
-        !-->
-    </LinearLayout>
 
 
 
