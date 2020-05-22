@@ -43,6 +43,7 @@ public class AdapterList extends RecyclerView.Adapter {
         listItem.lessonName.setText(list.getLesson());
         listItem.lessonField.setText(list.getLessonField());
         listItem.lessonPrice.setText(list.getLessonPrice());
+        listItem.lessonLatLng.setText(String.valueOf(list.getLessonLatLng().getLatitude()+" "+String.valueOf(list.getLessonLatLng().getLongitude())));
 
 
     }
@@ -57,6 +58,7 @@ public class AdapterList extends RecyclerView.Adapter {
         public TextView lessonName;
         public TextView lessonField;
         public TextView lessonPrice;
+        public TextView lessonLatLng;
 
 
 
@@ -65,6 +67,7 @@ public class AdapterList extends RecyclerView.Adapter {
             lessonName = itemView.findViewById(R.id.lessonName);
             lessonField = itemView.findViewById(R.id.lessonField);
             lessonPrice = itemView.findViewById(R.id.lessonPrice);
+            lessonLatLng= itemView.findViewById(R.id.lessonLatLng);
         }
     }
 

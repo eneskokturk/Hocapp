@@ -81,7 +81,11 @@
                 android:textSize="17sp" />
         </LinearLayout>
 
-
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="50dp"
+            android:id="@+id/listViewLesson"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
 
 

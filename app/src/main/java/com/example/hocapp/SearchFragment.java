@@ -17,7 +17,10 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +30,8 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.hocapp.adapters.AdapterList;
+import com.example.hocapp.models.LessonModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -34,6 +39,7 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -56,7 +62,7 @@ import java.util.Map;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SearchFragment extends Fragment  {
+public class SearchFragment extends Fragment {
 
 
     View mView;
@@ -74,6 +80,7 @@ public class SearchFragment extends Fragment  {
     private StorageReference storageReference;
     private CollectionReference collectionReference = firebaseFirestore.collection("UserLessons");
 
+    RecyclerView recyclerView;
 
     ArrayList<String> lessonUserEmailArrayList;
 
@@ -101,7 +108,7 @@ public class SearchFragment extends Fragment  {
         lessonFieldList = new ArrayList<>();                                         // ders alanları listesi
         firebaseUser = firebaseAuth.getCurrentUser();
         userId = firebaseAuth.getCurrentUser().getUid();
-
+        recyclerView = mView.findViewById(R.id.listViewLesson);
         Button getLessonButton = mView.findViewById(R.id.getLessonButton);
 
 
@@ -114,15 +121,40 @@ public class SearchFragment extends Fragment  {
         lessonLatLngArrayDB = new ArrayList<>();
         lessonUserEmailArrayDB = new ArrayList<>();
 
-        firebaseUser = firebaseAuth.getCurrentUser();    // kullanici giris yapmis ise deger döndürür ,kimse yok ise null dondurur
 
 
-        getLessonButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openSearchMap();
-            }
-        });
+                getLessonButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        collectionReference.whereEqualTo("lesson",lessonSpinner.getSelectedItem() ).get()
+                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
+                                        // Add all to your list
+                                        List<LessonModel> types = queryDocumentSnapshots.toObjects(LessonModel.class);
+
+                                        ArrayList<LessonModel> mArrayList = new ArrayList<LessonModel>();
+                                        mArrayList.addAll(types);
+
+
+                                        AdapterList adapter = new AdapterList(mArrayList, getActivity());
+                                        recyclerView.setHasFixedSize(true);
+                                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                                        recyclerView.setAdapter(adapter);
+                                        for (int i = 0; i < mArrayList.size(); i++) {
+                                            Log.e("xxxx", mArrayList.get(i).getLesson());
+                                            Log.e("xxxx", mArrayList.get(i).getLessonField());
+                                            Log.e("xxxx", mArrayList.get(i).getLessonPrice());
+                                            Log.e("xxxx", mArrayList.get(i).getLessonUserEmail());
+                                            Log.e("xxxx", String.valueOf(mArrayList.get(i).getLessonLatLng().getLatitude()));
+                                            Log.e("xxxx", String.valueOf(mArrayList.get(i).getLessonLatLng().getLongitude()));
+                                        }
+                                    }
+                                });
+
+                    }
+                });
 
         getDataFirebaseLesson();                                                              //firebaseden ders adlarını alan fonksiyon cagirildi.
         lessonSpinner.setAdapter(new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, lessonList));  //Dersler Spinner
@@ -162,9 +194,10 @@ public class SearchFragment extends Fragment  {
     }
 
     private void openSearchMap() {
-        Intent intent = new Intent(getActivity(),SearchMapActivity.class);
+        Intent intent = new Intent(getActivity(), SearchMapActivity.class);
         getActivity().startActivity(intent);
     }
+
 
 
     public void getDataFirebaseLesson()                                 //ders adları firebaseden cekildi ve spinnerlara gönderilmek uzere degiskene atıldı
