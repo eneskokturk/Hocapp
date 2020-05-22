@@ -45,7 +45,7 @@ public class AdapterList extends RecyclerView.Adapter {
         listItem.lessonName.setText(list.getLesson());
         listItem.lessonField.setText(list.getLessonField());
         listItem.lessonPrice.setText(list.getLessonPrice());
-
+        listItem.lessonLatLng.setText(String.valueOf(list.getLessonLatLng().getLatitude()+" "+String.valueOf(list.getLessonLatLng().getLongitude())));
 
         /*
         listItem.image_delete.setOnClickListener(new View.OnClickListener() {
@@ -73,7 +73,7 @@ public class AdapterList extends RecyclerView.Adapter {
         public TextView lessonField;
         public TextView lessonPrice;
         public ImageView image_delete;
-
+        public TextView lessonLatLng;
 
 
         public listItem(@NonNull View itemView) {
@@ -82,7 +82,7 @@ public class AdapterList extends RecyclerView.Adapter {
             lessonField = itemView.findViewById(R.id.lessonField);
             lessonPrice = itemView.findViewById(R.id.lessonPrice);
         //    image_delete=itemView.findViewById(R.id.image_delete);
-
+            lessonLatLng=itemView.findViewById(R.id.lessonLatLng);
 
 
 

@@ -64,7 +64,7 @@ import java.util.Map;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SearchFragment extends Fragment  {
+public class SearchFragment extends Fragment {
 
 
     View mView;
@@ -93,11 +93,14 @@ public class SearchFragment extends Fragment  {
     String currentDocumentId;
     String currentId;
 
+    Boolean selectedLesson;
+    Boolean selectedLessonField;
+
     public SearchFragment() {
         // Required empty public constructor
     }
 
-    public  void ListFunc(){
+    public void ListFunc() {
 
     }
 
@@ -107,7 +110,7 @@ public class SearchFragment extends Fragment  {
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_search, container, false);
 
-       recyclerView=mView.findViewById(R.id.listView);
+        recyclerView = mView.findViewById(R.id.listView);
 
         firebaseAuth = FirebaseAuth.getInstance();              // initializing
         firebaseStorage = FirebaseStorage.getInstance();
@@ -125,46 +128,66 @@ public class SearchFragment extends Fragment  {
         final Spinner lessonFieldSpinner = mView.findViewById(R.id.lessonFieldSpinner);      //ders alanları Spinner
 
 
-
         firebaseUser = firebaseAuth.getCurrentUser();    // kullanici giris yapmis ise deger döndürür ,kimse yok ise null dondurur
 
 
         getLessonButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String currentEmail= FirebaseAuth.getInstance().getCurrentUser().getEmail();
+
+                if (selectedLesson == false || selectedLessonField == false) {
+                    Toast.makeText(getContext(), "İlan aramak için bilgileri eksiksiz giriniz.", Toast.LENGTH_SHORT).show();
+                } else {
+                    String currentEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
 
-                collectionReference.whereEqualTo("lessonUserEmail",currentEmail).get()
-                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                            @Override
-                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    collectionReference.whereEqualTo("lesson",lessonSpinner.getSelectedItem()).get()
+                            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                @Override
+                                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
-                                // Add all to your list
-                                List<LessonModel> types = queryDocumentSnapshots.toObjects(LessonModel.class);
+                                    // Add all to your list
+                                    List<LessonModel> types = queryDocumentSnapshots.toObjects(LessonModel.class);
 
-                                ArrayList<LessonModel> mArrayList = new ArrayList<LessonModel>();
-                                mArrayList.addAll(types);
+                                    ArrayList<LessonModel> mArrayList = new ArrayList<LessonModel>();
+                                    mArrayList.addAll(types);
 
 
-                                AdapterList adapter = new AdapterList(mArrayList, getActivity());
-                                recyclerView.setHasFixedSize(true);
-                                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                                recyclerView.setAdapter(adapter);
-                                for (int i = 0; i < mArrayList.size(); i++) {
-                                    Log.e("xxxx", mArrayList.get(i).getLesson());
-                                    Log.e("xxxx", mArrayList.get(i).getLessonField());
-                                    Log.e("xxxx", mArrayList.get(i).getLessonPrice());
-                                    Log.e("xxxx", mArrayList.get(i).getLessonUserEmail());
-                                    Log.e("xxxx", String.valueOf(mArrayList.get(i).getLessonLatLng().getLatitude()));
-                                    Log.e("xxxx", String.valueOf(mArrayList.get(i).getLessonLatLng().getLongitude()));
+                                    AdapterList adapter = new AdapterList(mArrayList, getActivity());
+                                    recyclerView.setHasFixedSize(true);
+                                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                                    recyclerView.setAdapter(adapter);
+                                    for (int i = 0; i < mArrayList.size(); i++) {
+                                        Log.e("xxxx", mArrayList.get(i).getLesson());
+                                        Log.e("xxxx", mArrayList.get(i).getLessonField());
+                                        Log.e("xxxx", mArrayList.get(i).getLessonPrice());
+                                        Log.e("xxxx", mArrayList.get(i).getLessonUserEmail());
+                                        Log.e("xxxx", String.valueOf(mArrayList.get(i).getLessonLatLng().getLatitude()));
+                                        Log.e("xxxx", String.valueOf(mArrayList.get(i).getLessonLatLng().getLongitude()));
+                                    }
                                 }
-                            }
-                        });
+                            });
+                }
             }
         });
 
 
+        getDataFirebaseLesson();                                                              //firebaseden ders adlarını alan fonksiyon cagirildi.
+        lessonSpinner.setAdapter(new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, lessonList));  //Dersler Spinner
+
+        lessonSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                selectedLesson = true;
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                selectedLesson = false;
+            }
+        });
 
 
         getDataFirebaseLessonsField();                                                      //fireseden ders alanlarını cekecek fonksiyon cagirildi
@@ -174,21 +197,18 @@ public class SearchFragment extends Fragment  {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                //System.out.println(lessonFieldList.get(position));         //Spinner 0 konumunda değil. Seçim yapıldı.
+                selectedLessonField = true;
 
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                selectedLessonField = false;
             }
         });
 
         return mView;
     }
-
-
-
 
 
     public void getDataFirebaseLesson()                                 //ders adları firebaseden cekildi ve spinnerlara gönderilmek uzere degiskene atıldı
@@ -232,8 +252,6 @@ public class SearchFragment extends Fragment  {
             }
         });
     }
-
-
 
 
 }

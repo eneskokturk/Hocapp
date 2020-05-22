@@ -97,6 +97,9 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
     LatLng latLngMapButton;
     ArrayList<String> lessonList;    //Dersler Dizisi
     ArrayList<String> lessonFieldList;      //Ders Alanları Dizisi
+    Boolean selectedLesson;
+    Boolean selectedLessonField;
+    String lessonPriceDatabase;
 
     private FirebaseFirestore firebaseFirestore=FirebaseFirestore.getInstance();
     private FirebaseAuth firebaseAuth;
@@ -130,7 +133,7 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
 
         lessonList = new ArrayList<>();                                              // dersler listesi
         lessonFieldList = new ArrayList<>();                                         // ders alanları listesi
-
+        lessonPriceDatabase = lessonPriceText.getText().toString();
 
 
 
@@ -170,54 +173,65 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
 
         });
 
-        createLessonButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {                //ilan olustur butonu
-
-                userId = firebaseAuth.getCurrentUser().getUid();
-                userFirebaseEmail = firebaseAuth.getCurrentUser().getEmail();
 
 
-                String lessonPriceDatabase = lessonPriceText.getText().toString();            //Ders ücreti Stringe cevrildi.
-                String lessonDatabase = lessonSpinner.getSelectedItem().toString();       //Spinnerdan secilen ders adı String olarak tutuldu.
-                String lessonFieldDatabase = lessonFieldSpinner.getSelectedItem().toString();  //Spinnerdan secilen ders alanı String olarak tutuldu.
-                LatLng lessonLocationDatabase;
+            createLessonButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {                //ilan olustur butonu
 
-                if (lessonPriceText.getText().toString().equals("")) {
-                    Toast.makeText(getContext(),"Lütfen Ders Ücreti Giriniz..",Toast.LENGTH_SHORT).show();
-                } else {
-                    if (latLngMapButton == null) {
-                        lessonLocationDatabase = userLocation;
-                    } else {
-                        lessonLocationDatabase = latLngMapButton;
+                    if(selectedLesson==false||selectedLessonField==false)
+                    {
+                        Toast.makeText(getContext(), "İlan yayınlamak için bilgileri eksiksiz giriniz.", Toast.LENGTH_SHORT).show();
                     }
+                    else
+                    {
+                    userId = firebaseAuth.getCurrentUser().getUid();
+                    userFirebaseEmail = firebaseAuth.getCurrentUser().getEmail();
 
-                    HashMap<String, Object> lessonData = new HashMap<>();
 
-                    lessonData.put("lesson", lessonDatabase);
-                    lessonData.put("lessonField", lessonFieldDatabase);
-                    lessonData.put("lessonPrice", lessonPriceDatabase);
-                    lessonData.put("lessonLatLng", lessonLocationDatabase);
-                    //lessonData.put("lessonUserId",userId);
-                    lessonData.put("lessonUserEmail", userFirebaseEmail);
+                    String lessonPriceDatabase = lessonPriceText.getText().toString();            //Ders ücreti Stringe cevrildi.
+                    String lessonDatabase = lessonSpinner.getSelectedItem().toString();       //Spinnerdan secilen ders adı String olarak tutuldu.
+                    String lessonFieldDatabase = lessonFieldSpinner.getSelectedItem().toString();  //Spinnerdan secilen ders alanı String olarak tutuldu.
+                    LatLng lessonLocationDatabase;
 
-                    firebaseFirestore.collection("UserLessons").add(lessonData).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                        @Override
-                        public void onSuccess(DocumentReference documentReference) {
-                            Toast.makeText(getContext(), "İlanınız oluşturulmuştur..", Toast.LENGTH_SHORT).show();
+                    if (lessonPriceText.getText().toString().equals("")) {
+                        Toast.makeText(getContext(),"Lütfen Ders Ücreti Giriniz..",Toast.LENGTH_SHORT).show();
+                    } else {
+                        if (latLngMapButton == null) {
+                            lessonLocationDatabase = userLocation;
+                        } else {
+                            lessonLocationDatabase = latLngMapButton;
                         }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getContext(), e.getLocalizedMessage().toString(), Toast.LENGTH_LONG).show();
 
-                        }
-                    });
+                        HashMap<String, Object> lessonData = new HashMap<>();
 
+                        lessonData.put("lesson", lessonDatabase);
+                        lessonData.put("lessonField", lessonFieldDatabase);
+                        lessonData.put("lessonPrice", lessonPriceDatabase);
+                        lessonData.put("lessonLatLng", lessonLocationDatabase);
+                        //lessonData.put("lessonUserId",userId);
+                        lessonData.put("lessonUserEmail", userFirebaseEmail);
 
+                        firebaseFirestore.collection("UserLessons").add(lessonData).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                Toast.makeText(getContext(), "İlanınız oluşturulmuştur..", Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getContext(), e.getLocalizedMessage().toString(), Toast.LENGTH_LONG).show();
+
+                            }
+                        });
+
+                    }
+                    }
                 }
-            }
-        });
+            });
+
+
+
 
 
 
@@ -228,13 +242,13 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                System.out.println(lessonList.get(position));       //Spinner 0 konumunda değil. Seçim yapıldı.
+                selectedLesson=true;
 
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                selectedLesson=false;
             }
         });
 
@@ -245,12 +259,12 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                //System.out.println(lessonFieldList.get(position));         //Spinner 0 konumunda değil. Seçim yapıldı.
+               selectedLessonField=true;
 
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                selectedLessonField=false;
             }
         });
 
