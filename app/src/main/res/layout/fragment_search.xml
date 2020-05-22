@@ -71,7 +71,8 @@
                 android:layout_width="150dp"
                 android:layout_height="31dp"
                 android:layout_gravity="right"
-                android:layout_margin="30dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="30dp"
                 android:background="@drawable/button"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground"
@@ -81,6 +82,11 @@
                 android:textSize="17sp" />
         </LinearLayout>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="20dp"
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
 
 

@@ -65,7 +65,7 @@ public class Tab2Fragment extends Fragment {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_tab2,container,false);
 
-        recyclerView = view.findViewById(R.id.listView);
+        recyclerView=view.findViewById(R.id.listView);
 
         firebaseAuth= FirebaseAuth.getInstance();
         firebaseFirestore= FirebaseFirestore.getInstance();

@@ -47,6 +47,7 @@ public class AdapterList extends RecyclerView.Adapter {
         listItem.lessonPrice.setText(list.getLessonPrice());
 
 
+        /*
         listItem.image_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,12 +56,11 @@ public class AdapterList extends RecyclerView.Adapter {
 
             }
         });
+
+         */
     }
 
 
-    public void deleteItem(int position){
-       
-    }
 
     @Override
     public int getItemCount() {
@@ -81,7 +81,7 @@ public class AdapterList extends RecyclerView.Adapter {
             lessonName = itemView.findViewById(R.id.lessonName);
             lessonField = itemView.findViewById(R.id.lessonField);
             lessonPrice = itemView.findViewById(R.id.lessonPrice);
-            image_delete=itemView.findViewById(R.id.image_delete);
+        //    image_delete=itemView.findViewById(R.id.image_delete);
 
 
 
