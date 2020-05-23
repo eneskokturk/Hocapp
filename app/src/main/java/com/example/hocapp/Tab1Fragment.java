@@ -1,7 +1,6 @@
 package com.example.hocapp;
 
 
-
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -76,7 +75,6 @@ import javax.annotation.Nullable;
  */
 
 
-
 public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
 
 
@@ -92,7 +90,7 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
     LocationListener locationListener;
     EditText mapsText;
     Geocoder geocoder;
-    String address = "";
+    public String address;
     LatLng userLocation;
     LatLng latLngMapButton;
     ArrayList<String> lessonList;    //Dersler Dizisi
@@ -100,12 +98,17 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
     Boolean selectedLesson;
     Boolean selectedLessonField;
     String lessonPriceDatabase;
+    String lessonCityName;
+    Double userLocationLat;
+    Double userLocationLng;
 
-    private FirebaseFirestore firebaseFirestore=FirebaseFirestore.getInstance();
+
+    private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     private FirebaseAuth firebaseAuth;
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
-    private CollectionReference collectionReference=firebaseFirestore.collection("Users");
+    private CollectionReference collectionReference = firebaseFirestore.collection("Users");
+
     public Tab1Fragment() {
         // Required empty public constructor
     }
@@ -124,11 +127,11 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
 
         final Spinner lessonSpinner = view.findViewById(R.id.lessonSpinner);
         final Spinner lessonFieldSpinner = view.findViewById(R.id.lessonFieldSpinner);
-        lessonPriceText=view.findViewById(R.id.lessonPrice);
+        lessonPriceText = view.findViewById(R.id.lessonPrice);
         createLessonButton = view.findViewById(R.id.createLessonButton);
-        final Button mapsButton =view.findViewById(R.id.mapsButton);
+        final Button mapsButton = view.findViewById(R.id.mapsButton);
 
-        mapsText=view.findViewById(R.id.mapsText);
+        mapsText = view.findViewById(R.id.mapsText);
         geocoder = new Geocoder(getContext(), Locale.getDefault());
 
         lessonList = new ArrayList<>();                                              // dersler listesi
@@ -136,36 +139,35 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
         lessonPriceDatabase = lessonPriceText.getText().toString();
 
 
-
         mapsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {                                                    //konuma git butonu
                 mMap.clear();
-                String location=mapsText.getText().toString();
+                String location = mapsText.getText().toString();
 
-                if(location!=null && !location.equals("")){
-                    List<Address> addressList=null;
-                    Geocoder geocoder=new Geocoder(getContext());
+                if (location != null && !location.equals("")) {
+                    List<Address> addressList = null;
+                    Geocoder geocoder = new Geocoder(getContext());
                     try {
-                        addressList=geocoder.getFromLocationName(location,1);
+                        addressList = geocoder.getFromLocationName(location, 1);
                         if (addressList != null && addressList.size() > 0) {
                             if (addressList.get(0).getThoroughfare() != null) {                                 //cadde adi
                                 address += addressList.get(0).getThoroughfare();
 
                                 if (addressList.get(0).getAdminArea() != null) {                                    //Sehir adi ve cadde adi title da gösterilmek üzere birleştirildi
-                                    address += " " + addressList.get(0).getAdminArea();
+                                    address += addressList.get(0).getAdminArea();
                                 }
                             }
                         }
-                    } catch ( IOException e) {
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    Address address=addressList.get(0);
-                    latLngMapButton=new LatLng(address.getLatitude(),address.getLongitude());
-                    mMap.addMarker(new MarkerOptions().position(latLngMapButton).title("Burası "+ address.getAddressLine(0)));
+                    Address address = addressList.get(0);
+                    latLngMapButton = new LatLng(address.getLatitude(), address.getLongitude());
+                    mMap.addMarker(new MarkerOptions().position(latLngMapButton).title("Burası " + address.getAddressLine(0)));
                     mMap.animateCamera(CameraUpdateFactory.newLatLng(latLngMapButton));
 
-                    System.out.println(latLngMapButton+"mapsbutton");
+                    System.out.println(address.getAdminArea() + "mapsbutton");
 
                 }
 
@@ -174,97 +176,109 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
         });
 
 
+        createLessonButton.setOnClickListener(new View.OnClickListener() {
+                                                  @Override
+                                                  public void onClick(View view) {                //ilan olustur butonu
 
-            createLessonButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {                //ilan olustur butonu
-
-                    if(selectedLesson==false||selectedLessonField==false)
-                    {
-                        Toast.makeText(getContext(), "İlan yayınlamak için bilgileri eksiksiz giriniz.", Toast.LENGTH_SHORT).show();
-                    }
-                    else
-                    {
-                    userId = firebaseAuth.getCurrentUser().getUid();
-                    userFirebaseEmail = firebaseAuth.getCurrentUser().getEmail();
+                                                      if (selectedLesson == false || selectedLessonField == false) {
+                                                          Toast.makeText(getContext(), "İlan yayınlamak için bilgileri eksiksiz giriniz.", Toast.LENGTH_SHORT).show();
+                                                      } else {
+                                                          userId = firebaseAuth.getCurrentUser().getUid();
+                                                          userFirebaseEmail = firebaseAuth.getCurrentUser().getEmail();
 
 
-                    String lessonPriceDatabase = lessonPriceText.getText().toString();            //Ders ücreti Stringe cevrildi.
-                    String lessonDatabase = lessonSpinner.getSelectedItem().toString();       //Spinnerdan secilen ders adı String olarak tutuldu.
-                    String lessonFieldDatabase = lessonFieldSpinner.getSelectedItem().toString();  //Spinnerdan secilen ders alanı String olarak tutuldu.
-                    LatLng lessonLocationDatabase;
+                                                          String lessonPriceDatabase = lessonPriceText.getText().toString();            //Ders ücreti Stringe cevrildi.
+                                                          String lessonDatabase = lessonSpinner.getSelectedItem().toString();       //Spinnerdan secilen ders adı String olarak tutuldu.
+                                                          String lessonFieldDatabase = lessonFieldSpinner.getSelectedItem().toString();  //Spinnerdan secilen ders alanı String olarak tutuldu.
+                                                          LatLng lessonLocationDatabase;
+                                                          String lessonAddress = null;
 
-                    if (lessonPriceText.getText().toString().equals("")) {
-                        Toast.makeText(getContext(),"Lütfen Ders Ücreti Giriniz..",Toast.LENGTH_SHORT).show();
-                    } else {
-                        if (latLngMapButton == null) {
-                            lessonLocationDatabase = userLocation;
-                        } else {
-                            lessonLocationDatabase = latLngMapButton;
-                        }
+                                                          if (lessonPriceText.getText().toString().equals("")) {
+                                                              Toast.makeText(getContext(), "Lütfen Ders Ücreti Giriniz..", Toast.LENGTH_SHORT).show();
+                                                          } else {
+                                                              if (latLngMapButton == null) {
+                                                                  lessonLocationDatabase = userLocation;
+                                                              } else {
+                                                                  lessonLocationDatabase = latLngMapButton;
+                                                              }
 
-                        HashMap<String, Object> lessonData = new HashMap<>();
-
-                        lessonData.put("lesson", lessonDatabase);
-                        lessonData.put("lessonField", lessonFieldDatabase);
-                        lessonData.put("lessonPrice", lessonPriceDatabase);
-                        lessonData.put("lessonLatLng", lessonLocationDatabase);
-                        //lessonData.put("lessonUserId",userId);
-                        lessonData.put("lessonUserEmail", userFirebaseEmail);
-
-                        firebaseFirestore.collection("UserLessons").add(lessonData).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                Toast.makeText(getContext(), "İlanınız oluşturulmuştur..", Toast.LENGTH_SHORT).show();
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(getContext(), e.getLocalizedMessage().toString(), Toast.LENGTH_LONG).show();
-
-                            }
-                        });
-
-                    }
-                    }
-                }
-            });
+                                                              try {
+                                                                  List<Address> addressList = geocoder.getFromLocation(userLocationLat, userLocationLng, 1);
+                                                                  if (addressList != null && addressList.size() > 0) {
 
 
+                                                                      if (addressList.get(0).getAdminArea() != null) {                                    //Sehir adi ve cadde adi title da gösterilmek üzere birleştirildi
+                                                                          address += addressList.get(0).getAdminArea();
+
+                                                                      }
+
+                                                                  }
+                                                              } catch (IOException e) {
+                                                                  e.printStackTrace();
+                                                              }
 
 
+                                                          }
+
+                                                          HashMap<String, Object> lessonData = new HashMap<>();
+
+                                                          lessonData.put("lesson", lessonDatabase);
+                                                          lessonData.put("lessonField", lessonFieldDatabase);
+                                                          lessonData.put("lessonPrice", lessonPriceDatabase);
+                                                          // lessonData.put("lessonLatLng", lessonLocationDatabase);
+                                                          lessonData.put("lessonCity", address);
+                                                          lessonData.put("lessonUserEmail", userFirebaseEmail);
+
+                                                          firebaseFirestore.collection("UserLessons").add(lessonData).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                                              @Override
+                                                              public void onSuccess(DocumentReference documentReference) {
+                                                                  Toast.makeText(getContext(), "İlanınız oluşturulmuştur..", Toast.LENGTH_SHORT).show();
+                                                              }
+                                                          }).addOnFailureListener(new OnFailureListener() {
+                                                              @Override
+                                                              public void onFailure(@NonNull Exception e) {
+                                                                  Toast.makeText(getContext(), e.getLocalizedMessage().toString(), Toast.LENGTH_LONG).show();
+
+                                                              }
+                                                          });
+
+                                                      }
+                                                  }
+                                              }
+        );
 
 
         getDataFirebaseLesson();                                                              //firebaseden ders adlarını alan fonksiyon cagirildi.
-        lessonSpinner.setAdapter(new ArrayAdapter<>(this.getActivity(),android.R.layout.simple_spinner_dropdown_item,lessonList));  //Dersler Spinner
+        lessonSpinner.setAdapter(new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, lessonList));  //Dersler Spinner
 
         lessonSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                selectedLesson=true;
+                selectedLesson = true;
 
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                selectedLesson=false;
+                selectedLesson = false;
             }
         });
 
         getDataFirebaseLessonsField();                                                      //fireseden ders alanlarını cekecek fonksiyon cagirildi
-        lessonFieldSpinner.setAdapter(new ArrayAdapter<>(this.getActivity(),android.R.layout.simple_spinner_dropdown_item,lessonFieldList));       //ders alanları spinner
+        lessonFieldSpinner.setAdapter(new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, lessonFieldList));       //ders alanları spinner
 
         lessonFieldSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-               selectedLessonField=true;
+                selectedLessonField = true;
 
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                selectedLessonField=false;
+                selectedLessonField = false;
             }
         });
 
@@ -273,21 +287,19 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
     }
 
 
-
     public void getDataFirebaseLesson()                                 //ders adları firebaseden cekildi ve spinnerlara gönderilmek uzere degiskene atıldı
     {
 
-        final CollectionReference collectionReference =firebaseFirestore.collection("Lessons");
+        final CollectionReference collectionReference = firebaseFirestore.collection("Lessons");
 
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@androidx.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @androidx.annotation.Nullable FirebaseFirestoreException e) {
 
-                for(DocumentSnapshot snapshot:queryDocumentSnapshots.getDocuments())
-                {
-                    Map<String,Object> data= snapshot.getData();   //map olarak datayi geri cekiyoruz
+                for (DocumentSnapshot snapshot : queryDocumentSnapshots.getDocuments()) {
+                    Map<String, Object> data = snapshot.getData();   //map olarak datayi geri cekiyoruz
 
-                    String lessonsForDatabase =(String) data.get("lessonsDatabase");  //gelecek verinin string oldugundan emin oldugumuz icin casting islemi yapabiliyoruz
+                    String lessonsForDatabase = (String) data.get("lessonsDatabase");  //gelecek verinin string oldugundan emin oldugumuz icin casting islemi yapabiliyoruz
 
                     lessonList.add(lessonsForDatabase);
                 }
@@ -298,17 +310,16 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
 
     public void getDataFirebaseLessonsField()                                                   //ders alanları firebaseden cekildi ve spinnerlara gönderilmek uzere degiskene atıldı
     {
-        CollectionReference collectionReference =firebaseFirestore.collection("LessonsField");
+        CollectionReference collectionReference = firebaseFirestore.collection("LessonsField");
 
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@androidx.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @androidx.annotation.Nullable FirebaseFirestoreException e) {
 
-                for(DocumentSnapshot snapshot:queryDocumentSnapshots.getDocuments())
-                {
-                    Map<String,Object> data= snapshot.getData();   //map olarak datayi geri cekiyoruz
+                for (DocumentSnapshot snapshot : queryDocumentSnapshots.getDocuments()) {
+                    Map<String, Object> data = snapshot.getData();   //map olarak datayi geri cekiyoruz
 
-                    String lessonsFieldForDatabase =(String) data.get("lessonsField");  //gelecek verinin string oldugundan emin oldugumuz icin casting islemi yapabiliyoruz
+                    String lessonsFieldForDatabase = (String) data.get("lessonsField");  //gelecek verinin string oldugundan emin oldugumuz icin casting islemi yapabiliyoruz
 
                     lessonFieldList.add(lessonsFieldForDatabase);
                 }
@@ -319,14 +330,12 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
 
 
     @Override
-    public void onViewCreated (View view, @Nullable Bundle savedInstanceState)
-    {
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mMapView = (MapView) view.findViewById(R.id.mapViewLayout);
 
 
-        if(mMapView != null)
-        {
+        if (mMapView != null) {
             mMapView.onCreate(null);
             mMapView.onResume();
             mMapView.getMapAsync(this);
@@ -345,33 +354,36 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
         //mMap.setMyLocationEnabled(true);                                //My current Location Button
 
 
-        locationManager = (LocationManager)this.getActivity().getSystemService(Context.LOCATION_SERVICE);
+        locationManager = (LocationManager) this.getActivity().getSystemService(Context.LOCATION_SERVICE);
         locationListener = new LocationListener() {
 
             @Override
             public void onLocationChanged(Location location) {
                 mMap.clear();                   //haritayi temizle
 
-                userLocation = new LatLng(location.getLatitude(),location.getLongitude());
-
+                userLocation = new LatLng(location.getLatitude(), location.getLongitude());
+                userLocationLat = location.getLatitude();
+                userLocationLng = location.getLongitude();
                 try {
-                    List<Address> addressList = geocoder.getFromLocation(location.getLatitude(),location.getLongitude(),1);
+                    List<Address> addressList = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
                     if (addressList != null && addressList.size() > 0) {
-                        if (addressList.get(0).getThoroughfare() != null) {                                 //cadde adi
-                            address += addressList.get(0).getThoroughfare();
 
-                            if (addressList.get(0).getAdminArea() != null) {                                    //Sehir adi ve cadde adi title da gösterilmek üzere birleştirildi
-                                address += " " + addressList.get(0).getAdminArea();
-                            }
+
+                        if (addressList.get(0).getAdminArea() != null) {                                    //Sehir adi ve cadde adi title da gösterilmek üzere birleştirildi
+                            address += " " + addressList.get(0).getAdminArea();
+
                         }
+
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 mMap.addMarker(new MarkerOptions().position(userLocation).title(address));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation,18));
-                System.out.println(userLocation+ "onlocationchange");
-                address="";
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 18));
+                System.out.println(address + "onlocationchange");
+                address = "";
+
+
             }
 
             @Override
@@ -390,17 +402,15 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
             }
         };
 
-        if(ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED)
-        {
-            ActivityCompat.requestPermissions(this.getActivity(),new String[] {Manifest.permission.ACCESS_FINE_LOCATION},1);
-        }else
-        {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,5000,5,locationListener);// 5000 ms veya 20 metre konum güncelle
-            Location lastLocation =locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            if(lastLocation!=null)                                      //son lokasyon null degilse  bilinen son lokasyonu goster
+        if (ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this.getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        } else {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 5, locationListener);// 5000 ms veya 20 metre konum güncelle
+            Location lastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            if (lastLocation != null)                                      //son lokasyon null degilse  bilinen son lokasyonu goster
             {
-                LatLng lastUserLocation = new LatLng(lastLocation.getLatitude(),lastLocation.getLongitude());
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastUserLocation,18));
+                LatLng lastUserLocation = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastUserLocation, 18));
                 System.out.println("last known location");
             }
         }
@@ -409,19 +419,19 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {       //kullanici izinleri verdiginde
 
-        if(grantResults.length>0)           //izinler dizisi bos degil ise
+        if (grantResults.length > 0)           //izinler dizisi bos degil ise
         {
-            if(requestCode==1)              //requestCode 1 ise yani access fine location icin kullandigimiz degere esit ise
+            if (requestCode == 1)              //requestCode 1 ise yani access fine location icin kullandigimiz degere esit ise
             {
-                if(ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED)  //izin verildiyse
+                if (ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)  //izin verildiyse
                 {
-                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,5000,20,locationListener);
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 20, locationListener);
 
-                    Location lastLocation =locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                    if(lastLocation!=null)                                      //son lokasyon null degilse  bilinen son lokasyonu goster
+                    Location lastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    if (lastLocation != null)                                      //son lokasyon null degilse  bilinen son lokasyonu goster
                     {
-                        LatLng lastUserLocation = new LatLng(lastLocation.getLatitude(),lastLocation.getLongitude());
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastUserLocation,18));
+                        LatLng lastUserLocation = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastUserLocation, 18));
                         System.out.println("last known location");
                     }
                 }

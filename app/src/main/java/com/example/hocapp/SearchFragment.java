@@ -72,6 +72,8 @@ public class SearchFragment extends Fragment {
 
     ArrayList<String> lessonList;    //Dersler Dizisi
     ArrayList<String> lessonFieldList;      //Ders Alanları Dizisi
+    ArrayList<String> cityList;    //Şehirler Dizisi
+
 
     String userId;
 
@@ -95,6 +97,7 @@ public class SearchFragment extends Fragment {
 
     Boolean selectedLesson;
     Boolean selectedLessonField;
+    Boolean selectedCity;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -118,6 +121,7 @@ public class SearchFragment extends Fragment {
         firebaseFirestore = FirebaseFirestore.getInstance();
         lessonList = new ArrayList<>();                                              // dersler listesi
         lessonFieldList = new ArrayList<>();                                         // ders alanları listesi
+        cityList = new ArrayList<>();
         firebaseUser = firebaseAuth.getCurrentUser();
         userId = firebaseAuth.getCurrentUser().getUid();
 
@@ -126,10 +130,14 @@ public class SearchFragment extends Fragment {
 
         final Spinner lessonSpinner = mView.findViewById(R.id.lessonSpinner);        //dersler Spinner
         final Spinner lessonFieldSpinner = mView.findViewById(R.id.lessonFieldSpinner);      //ders alanları Spinner
-
+        final Spinner citySpinner = mView.findViewById(R.id.citySpinner);
 
         firebaseUser = firebaseAuth.getCurrentUser();    // kullanici giris yapmis ise deger döndürür ,kimse yok ise null dondurur
 
+        cityList.add("İstanbul");
+        cityList.add("Ankara");
+        cityList.add("İzmir");
+        cityList.add("Zonguldak");
 
         getLessonButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,10 +149,18 @@ public class SearchFragment extends Fragment {
                     String currentEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
 
+<<<<<<< HEAD
                     collectionReference.whereEqualTo("lesson",lessonSpinner.getSelectedItem()).whereEqualTo("lessonField",lessonFieldSpinner.getSelectedItem()).get()
+=======
+                    collectionReference.whereEqualTo("lesson",lessonSpinner.getSelectedItem())
+                            .whereEqualTo("lessonField",lessonFieldSpinner.getSelectedItem())
+                            .whereEqualTo("lessonCity",citySpinner.getSelectedItem())
+                            .get()
+>>>>>>> 2712704604a8c37ef9ba1b0b9b3e6c69f478117b
                             .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                                 @Override
                                 public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
 
                                     // Add all to your list
                                     List<LessonModel> types = queryDocumentSnapshots.toObjects(LessonModel.class);
@@ -162,8 +178,10 @@ public class SearchFragment extends Fragment {
                                         Log.e("xxxx", mArrayList.get(i).getLessonField());
                                         Log.e("xxxx", mArrayList.get(i).getLessonPrice());
                                         Log.e("xxxx", mArrayList.get(i).getLessonUserEmail());
-                                        Log.e("xxxx", String.valueOf(mArrayList.get(i).getLessonLatLng().getLatitude()));
-                                        Log.e("xxxx", String.valueOf(mArrayList.get(i).getLessonLatLng().getLongitude()));
+
+                                        //Log.e("xxxx", mArrayList.get(i).getLessonCity());
+                                        //  Log.e("xxxx", String.valueOf(mArrayList.get(i).getLessonLatLng().getLatitude()));
+                                        // Log.e("xxxx", String.valueOf(mArrayList.get(i).getLessonLatLng().getLongitude()));
                                     }
                                 }
                             });
@@ -207,6 +225,18 @@ public class SearchFragment extends Fragment {
             }
         });
 
+        citySpinner.setAdapter(new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, cityList));
+        citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedCity = true;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                selectedCity = false;
+            }
+        });
         return mView;
     }
 
