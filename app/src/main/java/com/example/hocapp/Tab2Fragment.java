@@ -64,7 +64,27 @@ public class Tab2Fragment extends Fragment {
         storageReference = firebaseStorage.getReference();
 
 
+<<<<<<< HEAD
+
+
+
+        getUserLessons();
+
+
+
+
+
+
+
+        return view;
+    }
+
+    private void getUserLessons() {
+
+        String currentEmail= FirebaseAuth.getInstance().getCurrentUser().getEmail();
+=======
         String currentEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+>>>>>>> 2712704604a8c37ef9ba1b0b9b3e6c69f478117b
 
         System.out.println(currentEmail);
 
@@ -97,6 +117,15 @@ public class Tab2Fragment extends Fragment {
                 });
 
 
+<<<<<<< HEAD
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getUserLessons();
+    }
+=======
 //        collectionReference.whereEqualTo("lessonUserEmail",currentEmail).addSnapshotListener(new EventListener<QuerySnapshot>() {
 //            @Override
 //            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
@@ -131,5 +160,6 @@ public class Tab2Fragment extends Fragment {
     }
 
 
+>>>>>>> 2712704604a8c37ef9ba1b0b9b3e6c69f478117b
 }
 

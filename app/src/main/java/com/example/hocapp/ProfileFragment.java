@@ -16,6 +16,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -89,6 +90,7 @@ public class ProfileFragment extends Fragment {
     StorageReference storageReference;
 
 
+    TextView email;
     TextView signOut;
     Bitmap selectedImage;
     TextView text;
@@ -101,7 +103,7 @@ public class ProfileFragment extends Fragment {
     String userBiography;
     String userBirthday;
     public String userPictureUrl;
-    FloatingActionButton fab;
+    CardView fab;
     Uri userImageData;
 
     //progress dialog
@@ -154,7 +156,7 @@ public class ProfileFragment extends Fragment {
 
 
 
-
+        email=view.findViewById(R.id.email);
         profilePicture=view.findViewById(R.id.profilePicture);
         signOut=view.findViewById(R.id.signOut);
         text=view.findViewById(R.id.text);
@@ -173,6 +175,8 @@ public class ProfileFragment extends Fragment {
         documentReference.addSnapshotListener( new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+
+                    email.setText(documentSnapshot.getString("email"));
                     text.setText(documentSnapshot.getString("userName"));
                     userBio.setText(documentSnapshot.getString("biography"));
                     userPictureUrl= (documentSnapshot.getString("downloadUrl"));
@@ -347,7 +351,7 @@ public class ProfileFragment extends Fragment {
 
     private void showImagePicDialog() {
         //show dialog containing options Camera and Gallery to pick the image
-        String options[] = {"Camera", "Gallery"};
+        String options[] = {"Gallery"};
 
         //alert dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -358,13 +362,9 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialogInterface, int which) {
                 //handle dialog item clicks
-                if (which == 0) {
-                    //Camera Clicked
-                }
-                   else if (which == 1) {
-                    //Gallery Clicked
+
                         pickFromGallery();
-                }
+
 
 
             }

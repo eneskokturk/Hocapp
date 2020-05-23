@@ -3,7 +3,25 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="darkOrange">#D95100</color>
-    <color name="orange">#FDD78C</color>
-    <color name="white">#FFFFFF</color>
+    <color name="koyuturuncu">#D95100</color>
+    <color name="acikturuncu">#FDD78C</color>
+    <color name="white">#FFF</color>
+    <color name="amber">#FFF8E1</color>
+    <color name="amber100">#FFECB3</color>
+    <color name="amber200">#FFE082</color>
+    <color name="amber300">#FFD54F</color>
+    <color name="amber400">#FFCA28</color>
+    <color name="amber500">#FFC107</color>
+    <color name="amber600">#FFB300</color>
+    <color name="amber900">#FF6F00</color>
+    <color name="A100">#FFE57F</color>
+    <color name="A200">#FFD740</color>
+    <color name="A400">#FFC400</color>
+    <color name="turuncudeneme">#EE6002</color>
+    <color name="orange_1">#FFD180</color>
+    <color name="orange_2">#FFAB40</color>
+    <color name="orange">#FF9100</color>
+    <color name="darkOrange">#FF6D00</color>
+    <color name="orange_3">#ffddb0</color>
+
 </resources>
