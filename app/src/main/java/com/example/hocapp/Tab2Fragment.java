@@ -73,6 +73,22 @@ public class Tab2Fragment extends Fragment {
         storageReference = firebaseStorage.getReference();
 
 
+
+
+
+        getUserLessons();
+
+
+
+
+
+
+
+        return view;
+    }
+
+    private void getUserLessons() {
+
         String currentEmail= FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
         System.out.println(currentEmail);
@@ -105,52 +121,12 @@ public class Tab2Fragment extends Fragment {
                 });
 
 
-
-
-//        collectionReference.whereEqualTo("lessonUserEmail",currentEmail).addSnapshotListener(new EventListener<QuerySnapshot>() {
-//            @Override
-//            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-//
-//                if (e !=null){
-//                    Toast.makeText(getContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();    //eger firebasefirestoredan data okunanamazsa exception e yi göster
-//                }
-//                if(queryDocumentSnapshots!=null)
-//                {
-//                    for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots)
-//                    {
-//                        currentDocumentId =documentSnapshot.getId();
-//                        System.out.println("Current Document Id : "+currentDocumentId.toString());
-//
-//                        firebaseFirestore.collection("UserLessons").document(currentDocumentId).addSnapshotListener(new EventListener<DocumentSnapshot>() {
-//                            @Override
-//                            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-//
-//                                lessonName.setText(documentSnapshot.getString("lesson"));
-//                                lessonPrice.setText(documentSnapshot.getString("lessonPrice"));
-//                                lessonField.setText(documentSnapshot.getString("lessonField"));
-//
-//                            }
-//                        });
-//                    }
-//                }
-//            }
-//        });
-
-
-
-
-
-
-
-
-
-
-
-
-        return view;
     }
 
-
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        getUserLessons();
+    }
 }
 

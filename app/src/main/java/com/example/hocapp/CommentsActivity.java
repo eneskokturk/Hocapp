@@ -1,6 +1,7 @@
 package com.example.hocapp;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,7 +22,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -37,17 +40,21 @@ public class CommentsActivity extends AppCompatActivity {
     private FirebaseFirestore firebaseFirestore=FirebaseFirestore.getInstance();
 
 
+
     RecyclerView recyclerView3;
     private FirebaseAuth firebaseAuth;
     String postid;
     String publisherid;
     String userId;
+    String email;
 
+    String commentuser;
 
 
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
     private CollectionReference collectionReference=firebaseFirestore.collection("Comments");
+    private CollectionReference ref=firebaseFirestore.collection("Users");
 
 
     @Override
@@ -57,9 +64,26 @@ public class CommentsActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
+
+        email=firebaseAuth.getCurrentUser().getEmail();
+
+
         recyclerView3=findViewById(R.id.recycler_view);
 
         userId = firebaseAuth.getCurrentUser().getUid();
+
+        firebaseFirestore.collection("Users").whereEqualTo("email",email).addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+
+                commentuser = queryDocumentSnapshots.getDocuments().toString();
+
+
+
+                System.out.println(commentuser);
+            }
+        });
+
         firebaseFirestore = FirebaseFirestore.getInstance();
 
         /*
@@ -80,6 +104,8 @@ public class CommentsActivity extends AppCompatActivity {
         post=findViewById(R.id.post);
 
         Intent intent= getIntent();
+
+
         postid= intent.getStringExtra("postid");
         publisherid=intent.getStringExtra("publisherid");
 
@@ -109,6 +135,8 @@ public class CommentsActivity extends AppCompatActivity {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
+                String currentEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+
                 //Add all to your list
                 List<CommentsModel> types= queryDocumentSnapshots.toObjects(CommentsModel.class);
 
@@ -129,6 +157,7 @@ public class CommentsActivity extends AppCompatActivity {
                     //  Log.e("xxxx",forumArrayList.get(i).getDate().toString());
 
                     Log.e("xxxx",commentModelArrayList.get(i).getComment());
+                    Log.e("xxxx", commentModelArrayList.get(i).getEmail());
 
                     // Log.e("xxxx",forumArrayList.get(i).getLessonUserEmail());
                 }
@@ -144,6 +173,8 @@ public class CommentsActivity extends AppCompatActivity {
 
 
         HashMap<String, Object> hashMap= new HashMap<>();
+
+        hashMap.put("email",email);
         hashMap.put("comment",addcomment.getText().toString());
         hashMap.put("publisher",userId);
 

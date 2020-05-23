@@ -141,7 +141,7 @@ public class SearchFragment extends Fragment {
                     String currentEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
 
-                    collectionReference.whereEqualTo("lesson",lessonSpinner.getSelectedItem()).get()
+                    collectionReference.whereEqualTo("lesson",lessonSpinner.getSelectedItem()).whereEqualTo("lessonField",lessonFieldSpinner.getSelectedItem()).get()
                             .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                                 @Override
                                 public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
