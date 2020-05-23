@@ -35,7 +35,7 @@
                 android:background="@drawable/shape_spinner"
                 android:gravity="center"
                 android:spinnerMode="dropdown"
-                app:hintText="Lütfen Ders Seçimiz Yapınız.." />
+                app:hintText="Lütfen Ders Seçimi Yapınız.." />
 
 
             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
@@ -51,6 +51,18 @@
                 android:spinnerMode="dropdown"
                 app:hintText="Lütfen Alan Seçimi Yapınız" />
 
+            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                android:id="@+id/citySpinner"
+                android:layout_width="350dp"
+                android:layout_height="40dp"
+
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_margin="20dp"
+                android:background="@drawable/shape_spinner"
+                android:gravity="center"
+                android:spinnerMode="dropdown"
+                app:hintText="Lütfen Şehir Seçimi Yapınız.." />
 
 
 

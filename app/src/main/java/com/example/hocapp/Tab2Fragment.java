@@ -35,49 +35,40 @@ import java.util.List;
 
 public class Tab2Fragment extends Fragment {
 
-    private AdapterList mAdapter;
-    public Adapter lessonAdapter;
-    private FirebaseFirestore firebaseFirestore= FirebaseFirestore.getInstance();
+
+    private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     private FirebaseAuth firebaseAuth;
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
-    private CollectionReference collectionReference=firebaseFirestore.collection("UserLessons");
-    private DocumentReference documentReference;
+    private CollectionReference collectionReference = firebaseFirestore.collection("UserLessons");
 
-    TextView lessonName;
-    TextView lessonField;
-    TextView lessonPrice;
+
     RecyclerView recyclerView;
 
-    String currentDocumentId;
-    String currentId;
 
     public Tab2Fragment() {
         // Required empty public constructor
     }
 
-    public void ListFunc(){
-
-    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view=inflater.inflate(R.layout.fragment_tab2,container,false);
+        View view = inflater.inflate(R.layout.fragment_tab2, container, false);
 
-        recyclerView=view.findViewById(R.id.listView);
+        recyclerView = view.findViewById(R.id.listView);
 
-        firebaseAuth= FirebaseAuth.getInstance();
-        firebaseFirestore= FirebaseFirestore.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
 
 
-        String currentEmail= FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        String currentEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
         System.out.println(currentEmail);
 
-        collectionReference.whereEqualTo("lessonUserEmail",currentEmail).get()
+        collectionReference.whereEqualTo("lessonUserEmail", currentEmail).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -98,13 +89,12 @@ public class Tab2Fragment extends Fragment {
                             Log.e("xxxx", mArrayList.get(i).getLessonField());
                             Log.e("xxxx", mArrayList.get(i).getLessonPrice());
                             Log.e("xxxx", mArrayList.get(i).getLessonUserEmail());
-                            Log.e("xxxx", String.valueOf(mArrayList.get(i).getLessonLatLng().getLatitude()));
-                            Log.e("xxxx", String.valueOf(mArrayList.get(i).getLessonLatLng().getLongitude()));
+                            Log.e("xxxx", mArrayList.get(i).getLessonCity());
+                            //  Log.e("xxxx", String.valueOf(mArrayList.get(i).getLessonLatLng().getLatitude()));
+                            // Log.e("xxxx", String.valueOf(mArrayList.get(i).getLessonLatLng().getLongitude()));
                         }
                     }
                 });
-
-
 
 
 //        collectionReference.whereEqualTo("lessonUserEmail",currentEmail).addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -137,19 +127,8 @@ public class Tab2Fragment extends Fragment {
 //        });
 
 
-
-
-
-
-
-
-
-
-
-
         return view;
     }
-
 
 
 }
