@@ -11,15 +11,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.TextView;
 
 import com.example.hocapp.adapters.AdapterList;
+import com.example.hocapp.adapters.AdapterMyLessonList;
 import com.example.hocapp.models.LessonModel;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
@@ -68,7 +66,7 @@ public class Tab2Fragment extends Fragment {
 
 
 
-        getUserLessons();
+        getMyUserLessons();
 
 
 
@@ -79,7 +77,7 @@ public class Tab2Fragment extends Fragment {
         return view;
     }
 
-    private void getUserLessons() {
+    private void getMyUserLessons() {
 
 
 
@@ -100,7 +98,7 @@ public class Tab2Fragment extends Fragment {
                         mArrayList.addAll(types);
 
 
-                        AdapterList adapter = new AdapterList(mArrayList, getActivity());
+                        AdapterMyLessonList adapter = new AdapterMyLessonList(mArrayList, getActivity());
                         recyclerView.setHasFixedSize(true);
                         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                         recyclerView.setAdapter(adapter);
@@ -110,8 +108,6 @@ public class Tab2Fragment extends Fragment {
                             Log.e("xxxx", mArrayList.get(i).getLessonPrice());
                             Log.e("xxxx", mArrayList.get(i).getLessonUserEmail());
                             Log.e("xxxx", mArrayList.get(i).getLessonCity());
-                            //  Log.e("xxxx", String.valueOf(mArrayList.get(i).getLessonLatLng().getLatitude()));
-                            // Log.e("xxxx", String.valueOf(mArrayList.get(i).getLessonLatLng().getLongitude()));
                         }
                     }
                 });
@@ -122,36 +118,8 @@ public class Tab2Fragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        getUserLessons();
+        getMyUserLessons();
     }
-//            @Override
-//            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-//
-//                if (e !=null){
-//                    Toast.makeText(getContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();    //eger firebasefirestoredan data okunanamazsa exception e yi göster
-//                }
-//                if(queryDocumentSnapshots!=null)
-//                {
-//                    for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots)
-//                    {
-//                        currentDocumentId =documentSnapshot.getId();
-//                        System.out.println("Current Document Id : "+currentDocumentId.toString());
-//
-//                        firebaseFirestore.collection("UserLessons").document(currentDocumentId).addSnapshotListener(new EventListener<DocumentSnapshot>() {
-//                            @Override
-//                            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-//
-//                                lessonName.setText(documentSnapshot.getString("lesson"));
-//                                lessonPrice.setText(documentSnapshot.getString("lessonPrice"));
-//                                lessonField.setText(documentSnapshot.getString("lessonField"));
-//
-//                            }
-//                        });
-//                    }
-//                }
-//            }
-//        });
-
 
 
     }

@@ -134,6 +134,7 @@ public class SearchFragment extends Fragment {
 
         firebaseUser = firebaseAuth.getCurrentUser();    // kullanici giris yapmis ise deger döndürür ,kimse yok ise null dondurur
 
+        cityList.add("California");
         cityList.add("İstanbul");
         cityList.add("Ankara");
         cityList.add("İzmir");
@@ -174,6 +175,7 @@ public class SearchFragment extends Fragment {
                                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                                     recyclerView.setAdapter(adapter);
                                     for (int i = 0; i < mArrayList.size(); i++) {
+                                        Log.e("xxxx",mArrayList.get(i).getLessonUsername());
                                         Log.e("xxxx", mArrayList.get(i).getLesson());
                                         Log.e("xxxx", mArrayList.get(i).getLessonField());
                                         Log.e("xxxx", mArrayList.get(i).getLessonPrice());

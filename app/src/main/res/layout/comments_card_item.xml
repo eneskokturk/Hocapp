@@ -30,12 +30,14 @@
             <TextView
                 android:textColor="@color/orange"
                 android:textStyle="normal"
-                android:text="UserName"
+
                 android:textSize="16dp"
                 android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/userName" />
+
+
 
             <TextView
                 android:textColor="@color/common_google_signin_btn_text_dark_disabled"

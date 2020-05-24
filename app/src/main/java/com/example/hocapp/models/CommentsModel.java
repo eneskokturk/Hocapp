@@ -4,7 +4,7 @@ public class CommentsModel {
 
     private String comment;
 
-    private String userName;
+    private String commentUser;
 
     private String email;
 
@@ -24,12 +24,12 @@ public class CommentsModel {
         this.email = email;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getCommentUser() {
+        return commentUser;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setCommentUser(String commentUser) {
+        this.commentUser = commentUser;
     }
 
 

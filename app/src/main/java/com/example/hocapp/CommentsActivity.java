@@ -17,14 +17,17 @@ import android.widget.Toast;
 
 import com.example.hocapp.adapters.AdapterCommentList;
 import com.example.hocapp.models.CommentsModel;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -54,7 +57,7 @@ public class CommentsActivity extends AppCompatActivity {
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
     private CollectionReference collectionReference=firebaseFirestore.collection("Comments");
-    private CollectionReference ref=firebaseFirestore.collection("Users");
+
 
 
     @Override
@@ -72,33 +75,30 @@ public class CommentsActivity extends AppCompatActivity {
 
         userId = firebaseAuth.getCurrentUser().getUid();
 
-        firebaseFirestore.collection("Users").whereEqualTo("email",email).addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
 
-                commentuser = queryDocumentSnapshots.getDocuments().toString();
+        firebaseFirestore.collection("Users")
+                .whereEqualTo("email", email)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                 commentuser = document.getString("userName");
+
+                            }
+                        } else {
+                            Log.d("TAG", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
 
 
-
-                System.out.println(commentuser);
-            }
-        });
 
         firebaseFirestore = FirebaseFirestore.getInstance();
 
-        /*
-        Toolbar toolbarComment =findViewById(R.id.toolbarComment);
-        setSupportActionBar(toolbarComment);
-        getSupportActionBar().setTitle("Comments");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbarComment.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
 
-         */
 
         addcomment=findViewById(R.id.add_comment);
         post=findViewById(R.id.post);
@@ -156,6 +156,7 @@ public class CommentsActivity extends AppCompatActivity {
                 for(int i=0;i<commentModelArrayList.size();i++){
                     //  Log.e("xxxx",forumArrayList.get(i).getDate().toString());
 
+                    Log.e("xxxx",commentModelArrayList.get(i).getCommentUser());
                     Log.e("xxxx",commentModelArrayList.get(i).getComment());
                     Log.e("xxxx", commentModelArrayList.get(i).getEmail());
 
@@ -174,6 +175,7 @@ public class CommentsActivity extends AppCompatActivity {
 
         HashMap<String, Object> hashMap= new HashMap<>();
 
+        hashMap.put("commentUser",commentuser);
         hashMap.put("email",email);
         hashMap.put("comment",addcomment.getText().toString());
         hashMap.put("publisher",userId);

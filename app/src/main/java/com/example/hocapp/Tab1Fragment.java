@@ -42,8 +42,10 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -79,7 +81,6 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
 
 
     String userId;
-    String userFirebaseName;
     String userFirebaseEmail;
     EditText lessonPriceText;           //Ders Ücreti
     Button createLessonButton;       //ilan yayınlama butonu
@@ -101,6 +102,7 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
     String lessonCityName;
     Double userLocationLat;
     Double userLocationLng;
+    String lessonUsername;
 
 
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
@@ -175,6 +177,24 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
 
         });
 
+        userFirebaseEmail = firebaseAuth.getCurrentUser().getEmail();
+
+        firebaseFirestore.collection("Users")
+                .whereEqualTo("email", userFirebaseEmail)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                lessonUsername = document.getString("userName");
+                            }
+                        } else {
+                            Log.d("TAG", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
 
         createLessonButton.setOnClickListener(new View.OnClickListener() {
                                                   @Override
@@ -222,6 +242,7 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
 
                                                           HashMap<String, Object> lessonData = new HashMap<>();
 
+                                                          lessonData.put("lessonUsername",lessonUsername);
                                                           lessonData.put("lesson", lessonDatabase);
                                                           lessonData.put("lessonField", lessonFieldDatabase);
                                                           lessonData.put("lessonPrice", lessonPriceDatabase);
