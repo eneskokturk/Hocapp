@@ -13,18 +13,16 @@ import com.example.hocapp.MainActivity;
 import com.example.hocapp.R;
 import com.example.hocapp.models.LessonModel;
 
-import org.xmlpull.v1.XmlPullParser;
-
 import java.util.ArrayList;
 
-public class AdapterList extends RecyclerView.Adapter {
+public class AdapterMyLessonList extends RecyclerView.Adapter {
     public ArrayList arrayList;
     public Context context;
 
 
 
-    // RecyclerView recyclerView;
-    public AdapterList(ArrayList listdata, Context context) {
+
+    public AdapterMyLessonList(ArrayList listdata, Context context) {
 
         this.arrayList = listdata;
         this.context = context;
@@ -32,21 +30,31 @@ public class AdapterList extends RecyclerView.Adapter {
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View list = MainActivity.inflater.inflate(R.layout.lesson_card_item, parent, false);
+        View list = MainActivity.inflater.inflate(R.layout.mylesson_card_item, parent, false);
         return new listItem(list);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
 
-        final listItem listItem = (AdapterList.listItem) holder;
+        final listItem listItem = (AdapterMyLessonList.listItem) holder;
         final LessonModel list = (LessonModel) arrayList.get(position);
 
-        listItem.userName.setText(list.getLessonUsername());
         listItem.lessonName.setText(list.getLesson());
         listItem.lessonField.setText(list.getLessonField());
         listItem.lessonPrice.setText(list.getLessonPrice());
         listItem.lessonCity.setText(list.getLessonCity());
+
+
+
+        listItem.image_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                arrayList.remove(position);
+                notifyDataSetChanged();
+
+            }
+        });
 
 
     }
@@ -65,18 +73,17 @@ public class AdapterList extends RecyclerView.Adapter {
         public TextView lessonField;
         public TextView lessonPrice;
         public ImageView image_delete;
-      //  public TextView lessonLatLng;
+        //  public TextView lessonLatLng;
         public TextView lessonCity;
 
 
         public listItem(@NonNull View itemView) {
             super(itemView);
-            userName=itemView.findViewById(R.id.lessonUsername);
+
             lessonName = itemView.findViewById(R.id.lessonName);
             lessonField = itemView.findViewById(R.id.lessonField);
             lessonPrice = itemView.findViewById(R.id.lessonPrice);
-        //    image_delete=itemView.findViewById(R.id.image_delete);
-          //  lessonLatLng=itemView.findViewById(R.id.lessonLatLng);
+            image_delete=itemView.findViewById(R.id.image_delete);
             lessonCity=itemView.findViewById(R.id.lessonCity);
 
 

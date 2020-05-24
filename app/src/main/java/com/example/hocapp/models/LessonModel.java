@@ -7,6 +7,7 @@ public class LessonModel {
     private String lessonPrice;
     private String lessonUserEmail;
     private String lessonCity;
+    private String lessonUsername;
 
     public String getLessonCity() {
         return lessonCity;
@@ -55,5 +56,13 @@ public class LessonModel {
 
     public void setLessonUserEmail(String lessonUserEmail) {
         this.lessonUserEmail = lessonUserEmail;
+    }
+
+    public String getLessonUsername() {
+        return lessonUsername;
+    }
+
+    public void setLessonUsername(String lessonUsername) {
+        this.lessonUsername = lessonUsername;
     }
 }

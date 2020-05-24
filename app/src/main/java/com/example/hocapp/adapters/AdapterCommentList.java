@@ -54,6 +54,7 @@ public class AdapterCommentList extends RecyclerView.Adapter {
         final CommentsModel list = (CommentsModel) arrayList.get(position);
 
         listItem.comments.setText(list.getComment());
+        listItem.userName.setText(list.getCommentUser());
 
     }
 
@@ -69,6 +70,7 @@ public class AdapterCommentList extends RecyclerView.Adapter {
     class listItem extends RecyclerView.ViewHolder{
 
         public TextView comments;
+        public TextView userName;
 
 
 
@@ -78,7 +80,7 @@ public class AdapterCommentList extends RecyclerView.Adapter {
             super(itemView);
 
             comments=itemView.findViewById(R.id.comment);
-
+            userName=itemView.findViewById(R.id.userName);
 
 
 
