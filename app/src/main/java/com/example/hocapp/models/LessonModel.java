@@ -8,6 +8,8 @@ public class LessonModel {
     private String lessonUserEmail;
     private String lessonCity;
     private String lessonUsername;
+    private String userid;
+
 
     public String getLessonCity() {
         return lessonCity;
@@ -16,6 +18,15 @@ public class LessonModel {
     public void setLessonCity(String lessonCity) {
         this.lessonCity = lessonCity;
     }
+
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
+    }
+
 
     public String getLesson() {
         return lesson;
@@ -65,4 +76,6 @@ public class LessonModel {
     public void setLessonUsername(String lessonUsername) {
         this.lessonUsername = lessonUsername;
     }
+
+
 }
