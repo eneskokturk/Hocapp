@@ -1,6 +1,7 @@
 package com.example.hocapp.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -10,8 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hocapp.MainActivity;
+import com.example.hocapp.MessageActivity;
 import com.example.hocapp.R;
 import com.example.hocapp.models.LessonModel;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.auth.User;
+import com.google.gson.internal.$Gson$Preconditions;
 
 import org.xmlpull.v1.XmlPullParser;
 
@@ -21,6 +27,11 @@ public class AdapterList extends RecyclerView.Adapter {
     public ArrayList arrayList;
     public Context context;
 
+    private FirebaseAuth firebaseAuth;
+    public FirebaseUser firebaseUser;
+
+
+
 
 
     // RecyclerView recyclerView;
@@ -28,6 +39,12 @@ public class AdapterList extends RecyclerView.Adapter {
 
         this.arrayList = listdata;
         this.context = context;
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
+
+
+
+
     }
     @NonNull
     @Override
@@ -47,6 +64,21 @@ public class AdapterList extends RecyclerView.Adapter {
         listItem.lessonField.setText(list.getLessonField());
         listItem.lessonPrice.setText(list.getLessonPrice());
         listItem.lessonCity.setText(list.getLessonCity());
+
+
+
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, MessageActivity.class);
+                intent.putExtra("userid",list.getUserid());
+                intent.putExtra("lessonUsername",list.getLessonUsername());
+                System.out.println(list.getLessonUsername());
+                context.startActivity(intent);
+
+            }
+        });
 
 
     }

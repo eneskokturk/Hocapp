@@ -103,6 +103,7 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
     Double userLocationLat;
     Double userLocationLng;
     String lessonUsername;
+    String lessonImageUrl;
 
 
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
@@ -188,6 +189,8 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
 
+                                lessonImageUrl=document.getString("downloadUrl");
+                                System.out.println("Image URL: "+lessonImageUrl);
                                 lessonUsername = document.getString("userName");
                             }
                         } else {
@@ -242,6 +245,8 @@ public class Tab1Fragment extends Fragment implements OnMapReadyCallback {
 
                                                           HashMap<String, Object> lessonData = new HashMap<>();
 
+
+                                                          lessonData.put("userid",userId);
                                                           lessonData.put("lessonUsername",lessonUsername);
                                                           lessonData.put("lesson", lessonDatabase);
                                                           lessonData.put("lessonField", lessonFieldDatabase);
