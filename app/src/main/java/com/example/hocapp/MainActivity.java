@@ -73,11 +73,7 @@ public class MainActivity extends AppCompatActivity {
                     fragment = new HomeFragment();
                     loadFragment(fragment);
                     return true;
-                case R.id.navigation_video:
-                  //  toolbar.setTitle("Canlı Yayın");
-                    fragment = new VideoFragment();
-                    loadFragment(fragment);
-                    return true;
+
                 case R.id.navigation_forum:
                   //  toolbar.setTitle("Forum");
                     fragment = new ForumFragment();
