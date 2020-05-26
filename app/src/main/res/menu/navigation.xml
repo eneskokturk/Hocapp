@@ -12,10 +12,7 @@
         android:icon="@drawable/more"
         android:title="İlanlarım" />
 
-    <item
-        android:id="@+id/navigation_video"
-        android:icon="@drawable/ic_video"
-        android:title="Canlı Yayın" />
+
 
     <item
         android:id="@+id/navigation_forum"

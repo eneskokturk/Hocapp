@@ -41,7 +41,6 @@ import java.util.Map;
 public class MessageActivity extends AppCompatActivity {
 
 
-    ImageView profile_image;
     TextView messageUsername;
 
     MessageAdapter messageAdapter;
@@ -66,7 +65,6 @@ public class MessageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
 
-        profile_image = findViewById(R.id.profile_image);
         messageUsername = findViewById(R.id.messageUsername);
         btn_send = findViewById(R.id.btn_send);
         text_send = findViewById(R.id.txt_send);
