@@ -1,5 +1,6 @@
 package com.example.hocapp;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,9 +15,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.hocapp.adapters.AdapterCommentList;
 import com.example.hocapp.adapters.MessageAdapter;
 import com.example.hocapp.models.ChatModel;
 import com.example.hocapp.models.LessonModel;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -70,10 +73,7 @@ public class MessageActivity extends AppCompatActivity {
 
 
         recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
-        linearLayoutManager.setStackFromEnd(true);
-        recyclerView.setLayoutManager(linearLayoutManager);
+
 
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -91,44 +91,70 @@ public class MessageActivity extends AppCompatActivity {
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String msg = text_send.getText().toString();
-                if (!msg.equals("")) {
-                    sendMessage(userId, lessonUserId, msg);
-                    Toast.makeText(MessageActivity.this, "Mesaj gönderildi", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(MessageActivity.this, "Boş mesaj gönderemezsiniz...", Toast.LENGTH_SHORT).show();
-                }
+               if(text_send.getText().toString().equals("")){
+                   Toast.makeText(MessageActivity.this,"Lütfen mesaj girin.",Toast.LENGTH_SHORT).show();
+               }else{
+                   sendMessage();
+               }
+
+                readMessage();
             }
         });
 
 
-        readMessage(userId, lessonUserId);
+        readMessage();
 
     }
 
-    private void sendMessage(String sender, String receiver, String message) {
-
-        DocumentReference ref = firebaseFirestore.collection("Chats").document();
-
-        final HashMap<String, Object> forumData = new HashMap<>();
-
-        forumData.put("sender", sender);
-        forumData.put("receiver", receiver);
-        forumData.put("message", message);
+    private void sendMessage() {
 
 
-        firebaseFirestore.collection("Chats").add(forumData);
+        final HashMap<String, Object> hashMap = new HashMap<>();
+
+        hashMap.put("message",text_send.getText().toString());
+        hashMap.put("sender",userId);
+
+        firebaseFirestore.collection("Chats").add(hashMap).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                Toast.makeText(getApplicationContext(),"",Toast.LENGTH_SHORT).show();
+                text_send.setText("");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getApplicationContext(), e.getLocalizedMessage().toString(), Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
 
-    private void readMessage(final String myid, final String userid) {
+    private void readMessage() {
 
-        ref = firebaseFirestore.collection("Chats").document();
-       ref.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-           @Override
-           public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+        collectionReference.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
-           }
-       });
+                List<ChatModel> types = queryDocumentSnapshots.toObjects(ChatModel.class);
+
+                ArrayList<ChatModel> chatModelArrayList = new ArrayList<ChatModel>();
+                chatModelArrayList.addAll(types);
+
+                MessageAdapter messageAdapter= new MessageAdapter(chatModelArrayList,getApplicationContext());
+
+                LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+                layoutManager.setReverseLayout(true);
+                layoutManager.setStackFromEnd(true);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(layoutManager);
+
+                recyclerView.setAdapter(messageAdapter);
+                for(int i=0; i<chatModelArrayList.size();i++){
+                    Log.e("xxxx",chatModelArrayList.get(i).getMessage());
+                }
+
+            }
+        });
 
     }
 

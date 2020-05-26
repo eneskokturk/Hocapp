@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="300dp">
         <LinearLayout
-            android:background="@color/orange"
+            android:background="@color/orange_3"
             android:layout_width="match_parent"
             android:layout_height="260dp"
             android:orientation="vertical">

@@ -110,7 +110,7 @@
                 android:layout_gravity="center"
                 android:inputType="number"
                 android:hint="Lütfen Fiyat Giriniz."
-                android:textColorHint="@color/orange"
+                android:textColorHint="@color/orange_3"
                 />
 
         </LinearLayout>

@@ -27,8 +27,6 @@ import java.util.ArrayList;
 public class MessageAdapter extends RecyclerView.Adapter {
 
 
-    public static final int MSG_TYPE_LEFT=0;
-    public static final int MSG_TYPE_RIGHT=1;
 
     public ArrayList arrayList;
     public Context context;
@@ -58,15 +56,8 @@ public class MessageAdapter extends RecyclerView.Adapter {
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-        if(viewType == MSG_TYPE_RIGHT) {
             View list = MainActivity.inflater.inflate(R.layout.chat_item_right, parent, false);
             return new listItem(list);
-        }
-        else{
-            View list = MainActivity.inflater.inflate(R.layout.chat_item_left, parent, false);
-            return new listItem(list);
-        }
     }
 
     @Override
@@ -75,7 +66,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
         final listItem listItem = (MessageAdapter.listItem) holder;
         final ChatModel list = (ChatModel) arrayList.get(position);
 
-        ((listItem) holder).show_message.setText(list.getMessage());
+        listItem.show_message.setText(list.getMessage());
 
 
 
@@ -107,12 +98,5 @@ public class MessageAdapter extends RecyclerView.Adapter {
         }
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        if(((ChatModel) arrayList.get(position)).getSender().equals(firebaseAuth.getCurrentUser().getUid().toString())){
-            return  MSG_TYPE_RIGHT;
-        } else {
-            return MSG_TYPE_LEFT;
-        }
-    }
+
 }
