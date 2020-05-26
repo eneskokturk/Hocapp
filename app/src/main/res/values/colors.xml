@@ -21,7 +21,8 @@
     <color name="orange_1">#FFD180</color>
     <color name="orange_2">#FFAB40</color>
     <color name="orange">#FF9100</color>
-    <color name="darkOrange">#FF6D00</color>
+    <color name="deneme">#FF6D00</color>
     <color name="orange_3">#ffddb0</color>
+    <color name="darkOrange">#fc854e</color>
 
 </resources>

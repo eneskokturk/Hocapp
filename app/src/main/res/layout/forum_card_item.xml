@@ -4,85 +4,53 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#f7f7f7"
-
-    >
-    <!--
-    android:layout_margin="2dp"
-    app:cardCornerRadius="14dp"
     app:cardElevation="2dp"
-
-    !-->
-
+    app:cardCornerRadius="4dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@drawable/card_style"
         android:gravity="center">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="10dp"
             android:orientation="vertical">
 
             <TextView
                 android:textColor="@color/darkOrange"
                 android:textStyle="bold"
-                android:textSize="16dp"
-                android:layout_marginLeft="10dp"
+                android:textSize="16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/forumTitle" />
 
 
             <TextView
-                android:layout_marginLeft="20dp"
                 android:layout_marginBottom="2dp"
+                android:layout_marginTop="2dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/comments"
+                android:textSize="12sp"
                 android:text="Tüm yanıtlar..."
-                android:textColor="@color/place_autocomplete_prediction_secondary_text"
+                android:textColor="#ff000000"
                 />
 
 
             <TextView
-                android:layout_marginLeft="20dp"
                 android:layout_marginBottom="2dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/publisher"
+                android:visibility="gone"
                 />
-            <!--
-           <TextView
-               android:layout_marginLeft="20dp"
-               android:layout_marginBottom="2dp"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:id="@+id/forumContent"
-               />
-
-
-
-
-           <TextView
-               android:layout_gravity="right"
-               android:layout_marginLeft="20dp"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:id="@+id/contentDate"
-
-               />
-
-               !-->
-
-
         </LinearLayout>
-
-
-
-
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

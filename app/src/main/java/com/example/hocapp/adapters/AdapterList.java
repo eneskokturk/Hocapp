@@ -59,11 +59,11 @@ public class AdapterList extends RecyclerView.Adapter {
         final listItem listItem = (AdapterList.listItem) holder;
         final LessonModel list = (LessonModel) arrayList.get(position);
 
-        listItem.userName.setText(list.getLessonUsername());
-        listItem.lessonName.setText(list.getLesson());
+        listItem.userName.setText("Ders Veren: "+list.getLessonUsername());
+        listItem.lessonName.setText(list.getLesson()+"  -");
         listItem.lessonField.setText(list.getLessonField());
-        listItem.lessonPrice.setText(list.getLessonPrice());
-        listItem.lessonCity.setText(list.getLessonCity());
+        listItem.lessonPrice.setText("Saatlik ders ücreti: "+list.getLessonPrice()+" ₺");
+        listItem.lessonCity.setText("Bulunduğu İl: "+list.getLessonCity());
 
 
 

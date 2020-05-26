@@ -39,6 +39,8 @@
 
             </androidx.cardview.widget.CardView>
 
+            
+
             <TextView
                 android:id="@+id/messageUsername"
                 android:layout_marginTop="10dp"
@@ -57,13 +59,21 @@
     </com.google.android.material.appbar.AppBarLayout>
 
 
+    <ScrollView
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView">
+
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="60dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/recycler_view"
         android:layout_below="@id/bar_layout"
         android:layout_above="@+id/bottom"/>
 
+    </ScrollView>
 
 
     <RelativeLayout

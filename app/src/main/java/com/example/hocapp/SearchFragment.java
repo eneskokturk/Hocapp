@@ -41,6 +41,7 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -148,8 +149,6 @@ public class SearchFragment extends Fragment {
                     Toast.makeText(getContext(), "İlan aramak için bilgileri eksiksiz giriniz.", Toast.LENGTH_SHORT).show();
                 } else {
                     String currentEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-
-
 
 
 

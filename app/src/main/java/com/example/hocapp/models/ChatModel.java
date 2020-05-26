@@ -6,17 +6,6 @@ public class ChatModel {
     private String receiver;
     private String message;
 
-    public ChatModel(String sender, String receiver, String message){
-        this.sender= sender;
-        this.receiver=receiver;
-        this.message=message;
-
-
-    }
-
-    public ChatModel(){
-
-    }
 
     public String getSender(){ return sender; }
     public  void  setSender(String sender){ this.sender=sender;}

@@ -229,12 +229,12 @@ public class ProfileFragment extends Fragment {
 
         //options to show in dialog
 
-        String options[]={"Edit Profile Picture","Edit Name","Edit Biography"};
+        String options[]={"Profil Fotoğrafını Değiştir","Kullanıcı Adını Değiştir","Biyografiyi Değiştir"};
 
         //alert dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         //set title
-        builder.setTitle("Choose Action");
+        builder.setTitle("İşlem Seçin");
         //set items to dialog
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
@@ -242,7 +242,7 @@ public class ProfileFragment extends Fragment {
                 //handle dialog item clicks
                 if (which == 0) {
                     //Edit Profile Clicked
-                    pd.setMessage("Updating Profile Picture");
+                    pd.setMessage("Profil Fotoğrafı Güncelleniyor...");
                     profilePhoto="image";
                     showImagePicDialog();
 
@@ -250,14 +250,14 @@ public class ProfileFragment extends Fragment {
 
                 else if(which==1){
                     //Edit Name Clicked
-                    pd.setMessage("Updating Username");
+                    pd.setMessage("Kullanıcı Adı Güncelleniyor...");
                     //calling method and pass key "userName" as parameter to update it's value in database
                     showNameBioDialog("userName");
                 }
 
                 else if(which==2){
                     //Edit Biography Clicked
-                    pd.setMessage("Updating Biography");
+                    pd.setMessage("Biyografi Güncelleniyor...");
                     showNameBioDialog("biography");
                 }
             }
@@ -275,7 +275,7 @@ public class ProfileFragment extends Fragment {
 
         //custom dialog
         AlertDialog.Builder builder= new AlertDialog.Builder(getActivity());
-        builder.setTitle("Update"+key); //Update name or Update biography
+        builder.setTitle("Güncelle"); //Update name or Update biography
 
         //set layout of dialog
         LinearLayout linearLayout = new LinearLayout(getActivity());
@@ -283,14 +283,14 @@ public class ProfileFragment extends Fragment {
         linearLayout.setPadding(10,10,10,10);
         //add edit text
         final EditText editText= new EditText(getActivity());
-        editText.setHint("Enter"+key); //Enter name
+        editText.setHint("Lütfen değişiklik giriniz.."); //Enter name
         linearLayout.addView(editText);
 
 
         builder.setView(linearLayout);
 
         //add buttons in dialog to update
-        builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Güncelle", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 //input text from edit text
@@ -317,7 +317,7 @@ public class ProfileFragment extends Fragment {
                                 userBio.setText(value);
                             }
 
-                            Toast.makeText(getActivity(),"Updated...",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(),"Güncellendi... ",Toast.LENGTH_SHORT).show();
 
                         }
                     }).addOnFailureListener(new OnFailureListener() {
@@ -331,13 +331,13 @@ public class ProfileFragment extends Fragment {
 
                 }
                 else{
-                    Toast.makeText(getActivity(),"Please enter"+key,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),"Lütfen"+key+"giriniz.",Toast.LENGTH_SHORT).show();
 
                 }
             }
         });
         //add buttons in dialog to cancel
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("İptal", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -351,12 +351,12 @@ public class ProfileFragment extends Fragment {
 
     private void showImagePicDialog() {
         //show dialog containing options Camera and Gallery to pick the image
-        String options[] = {"Gallery"};
+        String options[] = {"Galeri"};
 
         //alert dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         //set title
-        builder.setTitle("Pick Image From");
+        builder.setTitle("Kütüphaneden Seç");
         //set items to dialog
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
@@ -453,14 +453,14 @@ public class ProfileFragment extends Fragment {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 pd.dismiss();
-                                Toast.makeText(getActivity(),"Image Updated...",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(),"Fotoğraf güncellendi..",Toast.LENGTH_SHORT).show();
 
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 pd.dismiss();
-                                Toast.makeText(getActivity(),"Error Updating Image...",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(),"Fotoğraf güncellerken hata..",Toast.LENGTH_SHORT).show();
 
                             }
                         });

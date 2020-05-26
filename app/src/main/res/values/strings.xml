@@ -1,5 +1,9 @@
 <resources>
-    <string name="app_name">Hocapp</string>
+
+
+    <string name="app_name"></string>
+
+
 
     <string name="signOutText"><u>Çıkış Yap</u></string>
 

@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +40,11 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar= getSupportActionBar();
 
-        toolbar.setTitle("Search");
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.drawable.hocapp_icon2);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+
+      //  toolbar.setTitle("Search");
         loadFragment(new SearchFragment());
 
         inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -58,27 +64,27 @@ public class MainActivity extends AppCompatActivity {
             Fragment fragment;
             switch (item.getItemId()) {
                 case R.id.navigation_search:
-                    toolbar.setTitle("Search");
+                  //  toolbar.setTitle("Search");
                     fragment = new SearchFragment();
                     loadFragment(fragment);
                     return true;
                 case R.id.navigation_home:
-                    toolbar.setTitle("Home");
+                  //  toolbar.setTitle("Home");
                     fragment = new HomeFragment();
                     loadFragment(fragment);
                     return true;
                 case R.id.navigation_video:
-                    toolbar.setTitle("Canlı Yayın");
+                  //  toolbar.setTitle("Canlı Yayın");
                     fragment = new VideoFragment();
                     loadFragment(fragment);
                     return true;
                 case R.id.navigation_forum:
-                    toolbar.setTitle("Forum");
+                  //  toolbar.setTitle("Forum");
                     fragment = new ForumFragment();
                     loadFragment(fragment);
                     return true;
                 case R.id.navigation_profile:
-                    toolbar.setTitle("Profile");
+                 //   toolbar.setTitle("Profile");
                     fragment = new ProfileFragment();
                     loadFragment(fragment);
                     return true;
