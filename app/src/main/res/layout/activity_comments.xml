@@ -35,7 +35,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Yorum ekleyin..."
+            android:hint="Yanıt giriniz..."
             android:id="@+id/add_comment"
             android:layout_centerVertical="true"
             android:layout_marginStart="10dp"
