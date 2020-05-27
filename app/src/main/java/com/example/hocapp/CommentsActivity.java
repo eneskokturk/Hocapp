@@ -183,7 +183,6 @@ public class CommentsActivity extends AppCompatActivity {
         firebaseFirestore.collection("Comments").add(hashMap).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {
-                Toast.makeText(getApplicationContext(), "Yorum oluşturuldu",Toast.LENGTH_SHORT).show();
                 addcomment.setText("");
             }
         }).addOnFailureListener(new OnFailureListener() {

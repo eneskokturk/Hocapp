@@ -257,7 +257,7 @@ public class ProfileFragment extends Fragment {
 
                 else if(which==2){
                     //Edit Biography Clicked
-                    pd.setMessage("Biyografi Güncelleniyor...");
+                    pd.setMessage("Hakkında Güncelleniyor...");
                     showNameBioDialog("biography");
                 }
             }
